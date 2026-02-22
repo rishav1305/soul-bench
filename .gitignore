@@ -1,0 +1,20 @@
+.DS_Store
+*.swp
+*.swo
+*~
+.env
+.venv/
+__pycache__/
+node_modules/
+.idea/
+.vscode/
+
+# Independently git-managed sub-repos
+soul-outreach/
+soul-mesh/
+soul-moa/
+soul-moe/
+portfolio_app/
+rishav1305/
+soul-blog/
+soul-brand/
