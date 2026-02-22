@@ -81,6 +81,38 @@ def format_prompt(raw_prompt: str, model_family: str) -> str:
     return f"{tmpl['prefix']}{raw_prompt}{tmpl['suffix']}"
 
 
+def clean_response(raw_output: str, model_family: str) -> str:
+    """Extract the model's actual response from llama-cli output.
+
+    Strips the llama.cpp banner (loading spinner, ASCII art, build info,
+    echoed prompt) and trailing stats/exit lines, returning only the
+    model's generated text.
+    """
+    if model_family == "qwen":
+        marker = "<|im_start|>assistant"
+    else:  # phi
+        marker = "<|assistant|>"
+
+    idx = raw_output.rfind(marker)
+    if idx >= 0:
+        response = raw_output[idx + len(marker):]
+    else:
+        response = raw_output
+
+    # Remove character+backspace pairs (spinner animation)
+    prev = None
+    while prev != response:
+        prev = response
+        response = re.sub(r'[^\n]\x08', '', response)
+    response = response.replace('\x08', '')
+
+    # Strip stats line and exit message
+    response = re.sub(r'\[\s*Prompt:.*?\]', '', response)
+    response = re.sub(r'Exiting\.\.\.', '', response)
+
+    return response.strip()
+
+
 def get_model_size_gb(model_path: str) -> float:
     return round(os.path.getsize(model_path) / (1024**3), 3)
 
@@ -139,23 +171,31 @@ def run_prompt(model_path: str, prompt: str, max_tokens: int = 256) -> dict:
     stdout = proc.stdout.read().strip() if proc.stdout else ""
     stderr = proc.stderr.read().strip() if proc.stderr else ""
 
-    tokens_generated = 0
     tokens_per_second = 0.0
-    eval_match = re.search(
-        r"eval time\s*=\s*[\d.]+\s*ms\s*/\s*(\d+)\s*tokens\s*\([\d.]+\s*ms per token,\s*([\d.]+)\s*tokens per second\)",
-        stderr,
+    # Parse stdout stats: [ Prompt: 72.7 t/s | Generation: 9.4 t/s ]
+    stdout_stats = re.search(
+        r'\[\s*Prompt:\s*([\d.]+)\s*t/s\s*\|\s*Generation:\s*([\d.]+)\s*t/s\s*\]',
+        stdout,
     )
-    if eval_match:
-        tokens_generated = int(eval_match.group(1))
-        tokens_per_second = float(eval_match.group(2))
+    if stdout_stats:
+        tokens_per_second = float(stdout_stats.group(2))
+
+    # Also try stderr (non-conversation mode)
+    if tokens_per_second == 0.0:
+        eval_match = re.search(
+            r"eval time\s*=\s*[\d.]+\s*ms\s*/\s*(\d+)\s*tokens\s*\([\d.]+\s*ms per token,\s*([\d.]+)\s*tokens per second\)",
+            stderr,
+        )
+        if eval_match:
+            tokens_per_second = float(eval_match.group(2))
+
+    cleaned = clean_response(stdout, model_family)
 
     return {
-        "response": stdout,
+        "response": cleaned,
         "latency_s": round(elapsed, 2),
         "peak_ram_mb": round(peak_rss_kb / 1024, 1),
-        "tokens_generated": tokens_generated,
         "tokens_per_second": round(tokens_per_second, 2),
-        "stderr_snippet": stderr[-500:] if stderr else "",
     }
 
 
@@ -165,7 +205,9 @@ def score_result(response: str, prompt_data: dict) -> float:
     resp_lower = response.lower().strip()
 
     if scoring == "exact_match_number":
-        return 1.0 if expected in response else 0.0
+        # Check the last standalone number in the response
+        numbers = re.findall(r'\b(\d+)\b', response)
+        return 1.0 if numbers and numbers[-1] == expected else 0.0
     elif scoring == "contains_function":
         return 1.0 if expected in response else 0.0
     elif scoring == "exact_match_label":
@@ -204,7 +246,6 @@ def run_benchmark(model_path: str, prompts: list[dict]) -> dict:
             "accuracy": accuracy,
             "latency_s": metrics["latency_s"],
             "peak_ram_mb": metrics["peak_ram_mb"],
-            "tokens_generated": metrics["tokens_generated"],
             "tokens_per_second": metrics["tokens_per_second"],
         }
         results.append(result)

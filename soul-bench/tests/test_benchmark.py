@@ -34,6 +34,38 @@ class TestFormatPrompt:
         assert result == "<|im_start|>user\nHello<|im_end|>\n<|im_start|>assistant\n"
 
 
+class TestCleanResponse:
+    def test_strips_qwen_banner(self):
+        raw = (
+            "Loading model... \x08\n\nllama.cpp banner\n\n"
+            "> <|im_start|>user\nHello<|im_end|>\n<|im_start|>assistant\n\n"
+            "|\x08-\x08 \x08The answer is 42.\n\n"
+            "[ Prompt: 70.0 t/s | Generation: 9.0 t/s ]\n\nExiting..."
+        )
+        assert benchmark.clean_response(raw, "qwen") == "The answer is 42."
+
+    def test_strips_phi_banner(self):
+        raw = (
+            "Loading model...\n\nllama.cpp banner\n\n"
+            "> <|user|>\nHello<|end|>\n<|assistant|>\n\n"
+            "|\x08-\x08 \x08SPAM\n\n"
+            "[ Prompt: 47.0 t/s | Generation: 11.0 t/s ]\n\nExiting..."
+        )
+        assert benchmark.clean_response(raw, "phi") == "SPAM"
+
+    def test_no_marker_returns_stripped(self):
+        raw = "Just some text"
+        assert benchmark.clean_response(raw, "qwen") == "Just some text"
+
+    def test_multiline_response_preserved(self):
+        raw = (
+            "<|im_start|>assistant\n\n"
+            "Line 1\nLine 2\nLine 3\n\n"
+            "[ Prompt: 70.0 t/s | Generation: 9.0 t/s ]\n\nExiting..."
+        )
+        assert benchmark.clean_response(raw, "qwen") == "Line 1\nLine 2\nLine 3"
+
+
 class TestScoreResult:
     def test_exact_match_number_pass(self):
         prompt = {"expected_answer": "9", "scoring": "exact_match_number"}
@@ -42,6 +74,17 @@ class TestScoreResult:
     def test_exact_match_number_fail(self):
         prompt = {"expected_answer": "9", "scoring": "exact_match_number"}
         assert benchmark.score_result("The answer is 7.", prompt) == 0.0
+
+    def test_exact_match_number_uses_last_number(self):
+        """Phi said 8 after mentioning 9 in reasoning — should score 0."""
+        prompt = {"expected_answer": "9", "scoring": "exact_match_number"}
+        response = "All but 9 die. 17 - 9 = 8. The farmer has 8 sheep left."
+        assert benchmark.score_result(response, prompt) == 0.0
+
+    def test_exact_match_number_last_is_correct(self):
+        prompt = {"expected_answer": "9", "scoring": "exact_match_number"}
+        response = "The farmer starts with 17 sheep. All but 9 die. Answer: 9"
+        assert benchmark.score_result(response, prompt) == 1.0
 
     def test_contains_function_pass(self):
         prompt = {"expected_answer": "def is_palindrome", "scoring": "contains_function"}
