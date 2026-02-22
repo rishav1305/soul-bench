@@ -93,7 +93,7 @@ digraph block_execution {
 - Run tests — confirm RED (failing)
 
 ### 5. EXECUTE — Implement in batches of 3
-**Model: opus** (production code needs maximum accuracy)
+**Model: sonnet** (tests constrain the work — implementation is well-defined)
 **Skill:** `superpowers:executing-plans`
 
 - Implement 3 tasks per batch
@@ -161,14 +161,14 @@ If issues found: fix, then go back to Step 7 (retest).
 | 2. Write plan | **opus** | Deep codebase understanding, comprehensive planning |
 | 3. Git worktree | **haiku** | Mechanical git commands |
 | 4. TDD (tests first) | **opus** | Edge cases, invariants, security boundaries |
-| 5. Execute (implement) | **opus** | Production code accuracy |
+| 5. Execute (implement) | **sonnet** | Tests constrain the work, well-defined tasks |
 | 6. Update planner | **haiku** | Simple checkbox edits |
 | 7. E2E test | **sonnet** | Run tests, read output, iterate fixes |
 | 8. Security audit | **opus** | Thoroughness for vulnerability detection |
 | 9. Verify | **sonnet** | Read output, confirm green |
 | 10. Commit + merge | **haiku** | Mechanical git operations |
 
-**Principle:** Opus for anything requiring judgment (planning, code, security). Sonnet for test execution and verification. Haiku for mechanical operations only.
+**Principle:** Opus for judgment-heavy work (planning, tests, security). Sonnet for well-constrained work (implementation from tests, verification). Haiku for mechanical operations only. Tests are the spec -- once Opus writes them, Sonnet implements to satisfy them.
 
 ## Checkpoints (mandatory)
 
