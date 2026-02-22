@@ -7,7 +7,7 @@
 
 ## Core Identity
 
-**Title:** AI Engineer | Consultant | Researcher
+**Title:** AI Engineer | AI Consultant | AI Researcher
 
 **One-Liner:** I architect and ship production AI systems — from mesh networks to autonomous agents — using AI coding tools as my development environment. 6 years of Python, SQL, and data platform engineering give me the domain knowledge to direct AI effectively.
 

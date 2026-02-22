@@ -1,6 +1,6 @@
 # RISHAV CHATTERJEE
 
-**AI Engineer | Consultant | Researcher**
+**AI Engineer | AI Consultant | AI Researcher**
 
 mail@rishavchatterjee.com | +91 9560382351 | Delhi, India
 github.com/rishav1305 | linkedin.com/in/chatterjeerishav | rishavchatterjee.com
