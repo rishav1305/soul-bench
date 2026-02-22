@@ -63,7 +63,7 @@ When I say **"sprint"**: Read `docs/daily-planner.md` for the current week. Show
   - No silent `except: pass` — always log and handle errors
   - No blocking calls in async functions — use aiofiles, asyncio.sleep, httpx
 
-## All 33 Projects
+## All 37 Projects
 
 ### From soul-os (18)
 
@@ -111,14 +111,28 @@ When I say **"sprint"**: Read `docs/daily-planner.md` for the current week. Show
 | 30 | soul-registry | PUBLIC | Scaffolded | Model cards + deploy gates |
 | 31 | soul-serve | PUBLIC | Scaffolded | Multi-model serving configs |
 
+### From soul-app backup (2)
+
+| # | Project | Type | Status | What It Is |
+|---|---------|------|--------|------------|
+| 32 | soul-search | PUBLIC | Has Code | Multi-provider web search aggregator |
+| 33 | soul-import | PUBLIC | Has Code | Conversation importers (ChatGPT, Claude, RSS, email) |
+
+### From delve-ai (2)
+
+| # | Project | Type | Status | What It Is |
+|---|---------|------|--------|------------|
+| 34 | soul-query | PUBLIC | Scaffolded | NL-to-SQL engine with schema guardrails |
+| 35 | soul-viz | PUBLIC | Scaffolded | Prompt-to-visualization engine |
+
 ### New Projects
 
 | # | Project | Type | Status | What It Is |
 |---|---------|------|--------|------------|
-| 32 | soul-blog | PUBLIC | Spec Only | Technical blog content pipeline |
-| 33 | soul-brand | PUBLIC | Spec Only | Brand identity and visual assets |
+| 36 | soul-blog | PUBLIC | Spec Only | Technical blog content pipeline |
+| 37 | soul-brand | PUBLIC | Spec Only | Brand identity and visual assets |
 
-**Summary**: 22 PUBLIC, 9 PRIVATE, 2 DUAL
+**Summary**: 26 PUBLIC, 9 PRIVATE, 2 DUAL
 
 ## Priority Stack
 
@@ -136,7 +150,7 @@ When I say **"sprint"**: Read `docs/daily-planner.md` for the current week. Show
 | Doc | Covers |
 |-----|--------|
 | docs/daily-planner.md | Day-by-day tasks for 4 weeks + trackers |
-| docs/ecosystem-map.md | All 31 projects with full details |
+| docs/ecosystem-map.md | All 37 projects with full details |
 | docs/architecture.md | Technical connections between the 3 repos |
 | docs/strategy.md | Licensing, revenue model, target audiences |
 | docs/roadmap.md | Prioritized action plan with dependencies |

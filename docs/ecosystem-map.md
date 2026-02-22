@@ -1,6 +1,6 @@
 # Soul Ecosystem Map
 
-Single source of truth for all 31 extractable projects in the Soul AI ecosystem.
+Single source of truth for all 37 extractable projects in the Soul AI ecosystem.
 
 ## Status Legend
 
@@ -103,17 +103,48 @@ Model research components at `~/soul/soul-moe/`.
 
 ---
 
+## D. From soul-app Backup (2 Projects)
+
+Standalone tools extracted from the soul-app monolith backup on titan-pc.
+
+| # | Project | Category | Status | Source Path | Description |
+|---|---------|----------|--------|-------------|-------------|
+| 32 | soul-search | OPEN | HAS CODE | soul/search/ (8 .py) | Multi-provider search aggregator: DuckDuckGo, Brave, Tavily, Google |
+| 33 | soul-import | OPEN | HAS CODE | soul/importers/ (7 .py) | Conversation importers: ChatGPT, Claude, RSS, URL, email, CSV, Drive |
+
+---
+
+## E. From delve-ai (2 Projects)
+
+NL-to-SQL platform decomposed into standalone components.
+
+| # | Project | Category | Status | Source Path | Description |
+|---|---------|----------|--------|-------------|-------------|
+| 34 | soul-query | OPEN | SCAFFOLDED | delve-ai specs | NL-to-SQL engine with schema guardrails, dual engine (Redshift + Athena) |
+| 35 | soul-viz | OPEN | SCAFFOLDED | delve-ai backlog | Prompt-to-visualization, chart selection, dashboard generation |
+
+---
+
+## F. Standalone (2 Projects)
+
+| # | Project | Category | Status | Source Path | Description |
+|---|---------|----------|--------|-------------|-------------|
+| 36 | soul-blog | OPEN | SPEC ONLY | New | Technical blog platform |
+| 37 | soul-brand | OPEN | SPEC ONLY | New | Brand assets and style guide |
+
+---
+
 ## Summary
 
 | Metric | Count |
 |--------|-------|
-| **Total projects** | **31** |
+| **Total projects** | **37** |
 | Production (in soul-os) | 14 |
-| Has code (extracted) | 1 |
-| Scaffolded (full structure) | 13 |
-| Spec only | 3 |
-| Open source | 19 |
-| Private | 10 |
+| Has code (extracted) | 3 |
+| Scaffolded (full structure) | 15 |
+| Spec only | 5 |
+| Open source | 26 |
+| Private | 9 |
 | Dual license | 2 |
 
 ## Location Index
@@ -125,4 +156,8 @@ Model research components at `~/soul/soul-moe/`.
 | ~/soul/soul-moe/ | Model research scaffold (7 projects) |
 | ~/soul/soul-outreach/ | Extracted outreach product |
 | ~/soul/soul-mesh/ | Extracted mesh networking |
+| ~/soul/soul-search/ | Extracted multi-provider search aggregator |
+| ~/soul/soul-import/ | Extracted conversation importers |
+| ~/soul/soul-query/ | Scaffolded NL-to-SQL engine |
+| ~/soul/soul-viz/ | Scaffolded visualization layer |
 | ~/soul/ | Command center + all project dirs |
