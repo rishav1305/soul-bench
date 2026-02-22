@@ -94,6 +94,7 @@ def run_prompt(model_path: str, prompt: str, max_tokens: int = 256) -> dict:
         "-m", model_path,
         "-p", formatted,
         "-n", str(max_tokens),
+        "-c", "2048",
         "--no-display-prompt",
         "--log-disable",
     ]
@@ -101,6 +102,7 @@ def run_prompt(model_path: str, prompt: str, max_tokens: int = 256) -> dict:
     start = time.perf_counter()
     proc = subprocess.Popen(
         cmd,
+        stdin=subprocess.DEVNULL,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,
