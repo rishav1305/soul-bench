@@ -96,7 +96,7 @@ def run_prompt(model_path: str, prompt: str, max_tokens: int = 256) -> dict:
         "-n", str(max_tokens),
         "-c", "2048",
         "--no-display-prompt",
-        "--no-conversation",
+        "-cnv", "--single-turn",
         "-e",
     ]
 
