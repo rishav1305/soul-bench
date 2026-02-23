@@ -61,13 +61,18 @@ Ongoing: soul-os          (side-effects)
 
 ## Day 2 — Sun Feb 23
 
-### Block 1: BUILD — Strategy redesign (9am-1pm)
+### Block 1: BUILD — Strategy redesign + soul-planner kickoff (9am-1pm)
 - [x] Redesign dev strategy: 37 projects -> 5 focused projects
 - [x] Define milestones for each project
 - [x] Write design doc: `docs/plans/2026-02-23-focused-dev-strategy-design.md`
 - [x] Update CLAUDE.md with new 5-project focus
 - [x] Set up 4-block daily rhythm (BUILD/EXPLORE/SOCIAL/SCOUT)
 - [x] Write content strategy: `docs/plans/2026-02-23-daily-content-strategy-design.md`
+- [x] Create `~/soul/soul-planner/` repo structure (plugin manifest, pyproject.toml, CLAUDE.md)
+- [x] Define SQLite schema: tasks + task_dependencies tables with Kanban states
+- [x] Implement `soul_planner/db.py` — async SQLite wrapper for task CRUD (67 tests)
+- [x] Implement `soul_planner/models.py` — Pydantic models + enums
+- [x] Implement `soul_planner/cli.py` — Click CLI with 12 subcommands
 
 ### Block 2: EXPLORE — soul-planner research (2pm-6pm)
 - [ ] Research Claude Code extension patterns (skills, agents, slash commands)
@@ -82,9 +87,9 @@ Ongoing: soul-os          (side-effects)
 - [ ] Post after user approval
 
 ### Block 4: SCOUT — job portal setup (9pm-11pm)
-- [ ] Create Naukri profile, upload resume
-- [ ] Create Indeed profile, set alerts for "AI Engineer" + "Data Engineer"
-- [ ] Enable LinkedIn "Open to Work" (visible to recruiters only)
+- [x] Create Naukri profile, upload resume
+- [x] Create Indeed profile, set alerts for "AI Engineer" + "Data Engineer"
+- [x] Enable LinkedIn "Open to Work" (visible to recruiters only)
 
 ### Evening Review (11pm, 15min)
 - [ ] Strategy redesign done? Planner research started? Content posted?
@@ -298,11 +303,11 @@ Ongoing: soul-os          (side-effects)
 
 | Channel | Setup | Active | Metric |
 |---------|-------|--------|--------|
-| Naukri | [ ] | [ ] | recruiter views: __ |
-| Indeed | [ ] | [ ] | applications: __ |
-| Instahyre | [ ] | [ ] | inbound matches: __ |
+| Naukri | [x] | [x] | recruiter views: __ |
+| Indeed | [x] | [x] | applications: __ |
+| Instahyre | [x] | [ ] | inbound matches: __ |
 | Wellfound | [ ] | [ ] | applications: __ |
-| LinkedIn Jobs | [ ] | [ ] | applications: __ |
+| LinkedIn Jobs | [x] | [x] | applications: __ |
 | Toptal | [ ] | [ ] | status: __ |
 | Turing | [ ] | [ ] | status: __ |
 | Andela | [ ] | [ ] | status: __ |
