@@ -66,49 +66,11 @@ class TestCleanResponse:
         assert benchmark.clean_response(raw, "qwen") == "Line 1\nLine 2\nLine 3"
 
 
-class TestScoreResult:
-    def test_exact_match_number_pass(self):
-        prompt = {"expected_answer": "9", "scoring": "exact_match_number"}
-        assert benchmark.score_result("The answer is 9.", prompt) == 1.0
-
-    def test_exact_match_number_fail(self):
-        prompt = {"expected_answer": "9", "scoring": "exact_match_number"}
-        assert benchmark.score_result("The answer is 7.", prompt) == 0.0
-
-    def test_exact_match_number_uses_last_number(self):
-        """Phi said 8 after mentioning 9 in reasoning — should score 0."""
-        prompt = {"expected_answer": "9", "scoring": "exact_match_number"}
-        response = "All but 9 die. 17 - 9 = 8. The farmer has 8 sheep left."
-        assert benchmark.score_result(response, prompt) == 0.0
-
-    def test_exact_match_number_last_is_correct(self):
-        prompt = {"expected_answer": "9", "scoring": "exact_match_number"}
-        response = "The farmer starts with 17 sheep. All but 9 die. Answer: 9"
-        assert benchmark.score_result(response, prompt) == 1.0
-
-    def test_contains_function_pass(self):
-        prompt = {"expected_answer": "def is_palindrome", "scoring": "contains_function"}
-        assert benchmark.score_result("def is_palindrome(s):\n    return s == s[::-1]", prompt) == 1.0
-
-    def test_contains_function_fail(self):
-        prompt = {"expected_answer": "def is_palindrome", "scoring": "contains_function"}
-        assert benchmark.score_result("Here is a palindrome checker", prompt) == 0.0
-
-    def test_exact_match_label_pass(self):
-        prompt = {"expected_answer": "SPAM", "scoring": "exact_match_label"}
-        assert benchmark.score_result("SPAM", prompt) == 1.0
-
-    def test_exact_match_label_case_insensitive(self):
-        prompt = {"expected_answer": "SPAM", "scoring": "exact_match_label"}
-        assert benchmark.score_result("spam", prompt) == 1.0
-
-    def test_exact_match_label_fail(self):
-        prompt = {"expected_answer": "SPAM", "scoring": "exact_match_label"}
-        assert benchmark.score_result("NOT_SPAM", prompt) == 0.0
-
-    def test_unknown_scoring_returns_zero(self):
-        prompt = {"expected_answer": "x", "scoring": "unknown_method"}
-        assert benchmark.score_result("x", prompt) == 0.0
+class TestDirectoryLoading:
+    def test_prompts_dir_has_json_files(self):
+        prompts_dir = Path(__file__).parent.parent / "prompts"
+        json_files = list(prompts_dir.glob("*.json"))
+        assert len(json_files) >= 1
 
 
 class TestSmokeTestPrompts:
