@@ -216,6 +216,55 @@ def done(task_id: int):
 
 @main.command()
 @click.argument("task_id", type=int)
+def validate(task_id: int):
+    """Move a task to VALIDATION (ready for user review)."""
+    db = _get_db()
+
+    async def _validate():
+        await db.init()
+        return await db.update(task_id, TaskUpdate(status=TaskStatus.VALIDATION))
+
+    task = _run(_validate())
+    click.echo(f"Task #{task.id} moved to validation: \"{task.title}\"")
+
+
+@main.command()
+@click.argument("task_id", type=int)
+def promote(task_id: int):
+    """Move a task from BACKLOG to IN_PROGRESS with PLANNING substep."""
+    db = _get_db()
+
+    async def _promote():
+        await db.init()
+        from soul_planner.runner import TaskRunner
+        runner = TaskRunner(db)
+        return await runner.start(task_id)
+
+    task = _run(_promote())
+    click.echo(f"Task #{task.id} started: \"{task.title}\" [planning 1/5]")
+
+
+@main.command()
+@click.argument("task_id", type=int)
+def advance(task_id: int):
+    """Advance a task to the next substep."""
+    db = _get_db()
+
+    async def _advance():
+        await db.init()
+        from soul_planner.runner import TaskRunner
+        runner = TaskRunner(db)
+        return await runner.advance(task_id)
+
+    task = _run(_advance())
+    if task.status == TaskStatus.VALIDATION:
+        click.echo(f"Task #{task.id} moved to validation: \"{task.title}\"")
+    else:
+        click.echo(f"Task #{task.id} advanced to: {task.substep.value}")
+
+
+@main.command()
+@click.argument("task_id", type=int)
 @click.argument("step", type=click.Choice([s.value for s in Substep]))
 def substep(task_id: int, step: str):
     """Update a task's current substep."""
@@ -227,6 +276,27 @@ def substep(task_id: int, step: str):
 
     task = _run(_substep())
     click.echo(f"Task #{task.id} substep: {task.substep.value}")
+
+
+@main.command("schedule")
+@click.option("--block", "block_num", type=int, default=None, help="Only schedule tasks from this block (1-4).")
+@click.option("--planner", default=None, type=click.Path(exists=True), help="Path to daily-planner.md.")
+def schedule(block_num: int | None, planner: str | None):
+    """Parse daily planner and queue today's uncompleted tasks."""
+    db = _get_db()
+
+    async def _schedule():
+        await db.init()
+        from pathlib import Path
+        from soul_planner.scheduler import schedule_tasks
+        planner_path = Path(planner) if planner else None
+        return await schedule_tasks(db, planner_path=planner_path, block_filter=block_num)
+
+    ids = _run(_schedule())
+    if not ids:
+        click.echo("No new tasks to schedule.")
+    else:
+        click.echo(f"Scheduled {len(ids)} tasks: {ids}")
 
 
 @main.command("next")
