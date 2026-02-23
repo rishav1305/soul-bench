@@ -1,0 +1,8 @@
+{
+  "name": "soul-planner",
+  "description": "Task queue and scheduler for Claude Code. Kanban workflow with BACKLOG/IN_PROGRESS/VALIDATION/DONE. Queue tasks, Claude executes them in background with live status.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Rishav"
+  }
+}
