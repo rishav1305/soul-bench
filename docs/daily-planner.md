@@ -2,21 +2,22 @@
 
 **Current Phase:** Phase 1 — Foundation (Weeks 1-2, Feb 22 - Mar 7)
 **Strategy:** Build-Ship-Learn Flywheel (5 parallel tracks)
-**Plans:** `docs/plans/2026-02-22-execution-plan-design.md`, `docs/plans/2026-02-22-dev-strategy-design.md`, `docs/plans/2026-02-22-marketing-strategy-design.md`
+**Plans:** `docs/plans/2026-02-22-execution-plan-design.md`, `docs/plans/2026-02-22-dev-strategy-design.md`, `docs/plans/2026-02-22-marketing-strategy-design.md`, `docs/plans/2026-02-23-daily-content-strategy-design.md`
 
 ## Daily Rhythm
 
 ```
 BLOCK 1: BUILD (9am - 1pm, 4h)
-  Track A: Ship products — extract 2 projects/week from soul-app backup
+  Ship products, extract code, write tests
 
 BLOCK 2: EXPLORE (2pm - 6pm, 4h)
-  Track B: Quantitative Finance — soul-finance, paper trading
-  Track C: Data Analytics — soul-analytics, DuckDB, insights
-  Track D: ML Research — CARS benchmark, soul-bench, quantization
+  Research, analytics, CARS benchmark, finance, DuckDB
 
-BLOCK 3: MARKET (7pm - 11pm, 4h)
-  Track E: Dashboard + marketing channels (LinkedIn, blog, job portals, freelance platforms, outreach)
+BLOCK 3: SOCIAL (7pm - 9pm, 2h)
+  Content from Block 1+2 -> LinkedIn, Twitter, blog, dev.to, Reddit
+
+BLOCK 4: SCOUT (9pm - 11pm, 2h)
+  Job portals, freelance platforms, recruiter outreach, applications
 ```
 
 ## Legend
@@ -29,17 +30,17 @@ BLOCK 3: MARKET (7pm - 11pm, 4h)
 
 ## Day 1 — Sun Feb 22
 
-### Block 1: BUILD — soul-skills extraction setup (9am-1pm)
-- [ ] SSH to titan-pc, list files in `soul/skills/` from soul-app backup
-- [ ] Extract all 8 source files to `~/soul/soul-skills/soul_skills/`
-- [ ] Create project structure: `pyproject.toml`, `README.md`, `CLAUDE.md`, `.gitignore`
-- [ ] Init git repo, first commit (raw extraction)
+### Block 1: BUILD — soul-mesh continued (9am-1pm)
+- [x] Review soul-mesh current state (16 tests, node/discovery/election done)
+- [x] Identify next modules to extract (transport, sync, relay)
+- [x] Extract and standalone-ify next module with tests
+- [x] Verify: all tests pass, zero `from brain` imports
 
 ### Block 2: EXPLORE — CARS baseline setup (2pm-6pm)
-- [ ] SSH to titan-pc, install llama.cpp (compile from source for i5-8400)
-- [ ] Download 3B model (e.g., Phi-3-mini-4k GGUF 4-bit) to titan-pc
-- [ ] Run smoke test: simple prompt, verify inference works
-- [ ] Document hardware baseline: inference speed, memory usage
+- [x] SSH to titan-pc, install llama.cpp (compile from source for i5-8400)
+- [x] Download 3B model (e.g., Phi-3-mini-4k GGUF 4-bit) to titan-pc
+- [x] Run smoke test: simple prompt, verify inference works
+- [x] Document hardware baseline: inference speed, memory usage
 
 ### Block 3: MARKET — job portal profiles (7pm-11pm)
 - [ ] Create Naukri profile, upload resume, set job preferences (AI/ML/Data, Delhi/Bangalore/Remote)
@@ -66,14 +67,20 @@ BLOCK 3: MARKET (7pm - 11pm, 4h)
 - [ ] Implement CARS metric calculator: `CARS = Accuracy / (VRAM_GB x Latency_s)`
 - [ ] Set up Colab Pro notebook for T4 GPU benchmark runs
 
-### Block 3: MARKET — job portals continued + first content (7pm-11pm)
+### Block 3: SOCIAL — first daily content (7pm-9pm)
+- [ ] Set up content-log: create `docs/content-log.md`
+- [ ] Draft LinkedIn post from today's BUILD work (soul-skills extraction)
+- [ ] Draft Twitter thread from today's EXPLORE work (soul-bench scaffolding)
+- [ ] Post after user approval
+
+### Block 4: SCOUT — job portals continued (9pm-11pm)
 - [ ] Create Wellfound profile, follow target companies from `docs/marketing/target-companies.md`
 - [ ] Create Monster India profile, upload resume
 - [ ] Enable LinkedIn "Open to Work" (visible to recruiters only)
 - [ ] Scan LinkedIn Jobs + Naukri, apply to 3-5 best matches
 
 ### Evening Review (11pm, 15min)
-- [ ] soul-skills standalone? Benchmark design done? Portals count?
+- [ ] soul-skills standalone? Benchmark design done? Content posted? Portals count?
 
 ---
 
@@ -91,7 +98,13 @@ BLOCK 3: MARKET (7pm - 11pm, 4h)
 - [ ] Calculate CARS score
 - [ ] Start Colab notebook: run same benchmark on T4 for comparison
 
-### Block 3: MARKET — freelance platforms batch 1 (7pm-11pm)
+### Block 3: SOCIAL — metrics post (7pm-9pm)
+- [ ] Review Block 1+2 notes from content-log
+- [ ] Draft LinkedIn post: CARS baseline metrics (Tue = Metrics Post)
+- [ ] Adapt to Twitter thread
+- [ ] Post after user approval
+
+### Block 4: SCOUT — freelance platforms batch 1 (9pm-11pm)
 - [ ] Prepare freelance-specific profile content (headline, summary, rate, portfolio)
 - [ ] Apply to Toptal (screening + timed test)
 - [ ] Apply to Turing (automated coding tests)
@@ -120,15 +133,20 @@ BLOCK 3: MARKET (7pm - 11pm, 4h)
 - [ ] Write first analysis notebook: basic market stats, moving averages
 - [ ] Commit: soul-analytics foundation
 
-### Block 3: MARKET — freelance platforms batch 2 + recruiter outreach (7pm-11pm)
+### Block 3: SOCIAL — architecture diagram (7pm-9pm)
+- [ ] Review Block 1+2 notes from content-log
+- [ ] Draft LinkedIn post: soul-goals architecture or DuckDB analytics setup (Wed = Architecture)
+- [ ] Adapt to Twitter thread with diagram
+- [ ] Post after user approval
+
+### Block 4: SCOUT — freelance platforms batch 2 + recruiter outreach (9pm-11pm)
 - [ ] Apply to Uplers (profile review + skill test)
 - [ ] Apply to Arc.dev (async coding challenge)
 - [ ] Connect with 5 recruiters on LinkedIn (search "AI recruiter India")
 - [ ] Register with 1-2 recruitment agencies (Michael Page, Hays India)
-- [ ] LinkedIn post #1: building in public update (37 projects, extraction pattern)
 
 ### Evening Review (11pm, 15min)
-- [ ] soul-goals done? Analytics loaded? Freelance apps count?
+- [ ] soul-goals done? Analytics loaded? Content posted? Freelance apps count?
 
 ---
 
@@ -147,15 +165,21 @@ BLOCK 3: MARKET (7pm - 11pm, 4h)
 - [ ] Implement basic momentum strategy: buy when 20-day MA > 50-day MA
 - [ ] Backtest on historical data, record results
 
-### Block 3: MARKET — content + communities (7pm-11pm)
-- [ ] Join r/selfhosted on Reddit (comment on 2-3 relevant posts)
+### Block 3: SOCIAL — opinion/insight post (7pm-9pm)
+- [ ] Review Block 1+2 notes from content-log
+- [ ] Draft LinkedIn post: opinion piece (Thu = Opinion/Insight)
+- [ ] Adapt to Twitter thread
+- [ ] Join r/selfhosted, r/MachineLearning — comment with genuine value
+- [ ] Post after user approval
+
+### Block 4: SCOUT — communities + recruiter outreach (9pm-11pm)
 - [ ] Join MLOps Community Slack (introduce yourself)
 - [ ] Join Latent Space Discord (lurk, find relevant threads)
-- [ ] Blog post #1 outline: "How I Architect 37 Projects as a Solo AI Engineer"
 - [ ] Connect with 5 more recruiters on LinkedIn
+- [ ] Scan LinkedIn Jobs + Naukri, apply to 3-5 best matches
 
 ### Evening Review (11pm, 15min)
-- [ ] GitHub repos live? Finance backtest results? Communities joined?
+- [ ] GitHub repos live? Finance backtest results? Content posted? Communities joined?
 
 ---
 
@@ -173,14 +197,19 @@ BLOCK 3: MARKET (7pm - 11pm, 4h)
 - [ ] soul-finance: implement paper trading simulator (no real money)
 - [ ] Run momentum strategy on recent 30 days, track simulated P&L
 
-### Block 3: MARKET — blog draft + LinkedIn + applications (7pm-11pm)
-- [ ] Write blog post #1 first draft (sections 1-3)
-- [ ] LinkedIn post #2: CARS metric teaser or extraction pattern insight
+### Block 3: SOCIAL — weekly progress post (7pm-9pm)
+- [ ] Review content-log for the full week
+- [ ] Draft LinkedIn post: week's highlights (Fri = Weekly Progress)
+- [ ] Adapt to Twitter thread
+- [ ] Post after user approval
+
+### Block 4: SCOUT — applications + follow-ups (9pm-11pm)
 - [ ] Scan job portals, apply to 5-8 roles (LinkedIn Jobs, Naukri, Indeed)
 - [ ] Respond to any recruiter messages from the week
+- [ ] Follow up on pending applications (1 week old+)
 
 ### Evening Review (11pm, 15min)
-- [ ] Outreach module done? CARS documented? Blog draft progress?
+- [ ] Outreach module done? CARS documented? Content posted? Applications count?
 
 ---
 
@@ -198,34 +227,44 @@ BLOCK 3: MARKET (7pm - 11pm, 4h)
 - [ ] Review all CARS data collected this week, identify gaps
 - [ ] Plan Week 2 EXPLORE priorities (extended CARS? more finance data?)
 
-### Block 3: MARKET — week review + content batch (7pm-11pm)
-- [ ] Finish blog post #1 draft
-- [ ] Batch-write next week's 2 LinkedIn posts
+### Block 3: SOCIAL — blog assembly (7pm-9pm)
+- [ ] Pull Mon-Fri LinkedIn posts from content-log
+- [ ] Pick 2-3 strongest themes from the week
+- [ ] Assemble into 600-1000 word blog post
+- [ ] Publish on blog (canonical), cross-post to dev.to
+- [ ] Share blog link on LinkedIn + Twitter
+
+### Block 4: SCOUT — week review + refresh (9pm-11pm)
 - [ ] Review Instahyre/Wellfound inbound matches
 - [ ] Refresh Naukri profile (triggers "recently active" boost)
-- [ ] Plan next week's content topics
+- [ ] Plan next week's SCOUT priorities
+- [ ] Log weekly SCOUT metrics (applications, responses, interviews)
 
 ### Week 1 Review (11pm, 30min)
 ```
 ## Week 1 Review — Feb 28
-### Block 1 (BUILD — Track A)
+### Block 1 (BUILD)
 - soul-skills: extracted? [ ] standalone? [ ] tests? [ ] Gitea? [ ] GitHub? [ ]
 - soul-goals: extracted? [ ] standalone? [ ] tests? [ ] Gitea? [ ] GitHub? [ ]
 - soul-outreach: next module done? [ ]
 - soul-mesh: continued? [ ]
 
-### Block 2 (EXPLORE — Tracks B/C/D)
+### Block 2 (EXPLORE)
 - CARS baseline 3B results: [ ]
 - soul-finance repo + backtest: [ ]
 - soul-analytics + first dataset: [ ]
 - soul-bench scaffolded: [ ]
 
-### Block 3 (MARKET — Track E + channels)
+### Block 3 (SOCIAL)
+- LinkedIn posts published: __ / 5
+- Twitter threads published: __ / 5
+- Blog post #1 status: assembled [ ] published [ ] cross-posted [ ]
+- Content-log entries: __
+
+### Block 4 (SCOUT)
 - Job portals live: __ / 6
 - Freelance platforms applied: __ / 5
 - Recruiter connections: __ / 10
-- LinkedIn posts published: __ / 2
-- Blog post #1 status: outline [ ] draft [ ] published [ ]
 - Communities joined: __ / 3
 - Job applications submitted: __
 
@@ -236,8 +275,8 @@ BLOCK 3: MARKET (7pm - 11pm, 4h)
 - [ ] soul-finance repo with data ingestion working
 - [ ] 6 job portal profiles live
 - [ ] 5+ freelance platform applications submitted
-- [ ] 2 LinkedIn posts published
-- [ ] Blog post #1 drafted
+- [ ] 5 LinkedIn posts published
+- [ ] Blog post #1 published
 
 ### Week 2 Adjustments
 - ...
@@ -260,7 +299,7 @@ BLOCK 3: MARKET (7pm - 11pm, 4h)
 | 7 | soul-brain | [ ] | [ ] | [ ] | [ ] | [ ] |
 | 8 | soul-agents | [ ] | [ ] | [ ] | [ ] | [ ] |
 | 9 | soul-outreach | [>] partial | [>] | [ ] | [ ] | [ ] |
-| 10 | soul-mesh | [>] partial | [>] | [x] 16 | [ ] | [ ] |
+| 10 | soul-mesh | [x] complete | [x] | [x] 100 | [ ] | [ ] |
 
 ## Research Tracker
 

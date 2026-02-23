@@ -15,14 +15,15 @@ See `docs/daily-planner.md` for granular day-by-day tasks.
 ## Daily Rhythm (12-14h)
 
 ```
-Block 1 (9am-1pm)  PRIMARY DEV     soul-outreach critical path
-Block 2 (2pm-6pm)  SECONDARY DEV   project extractions, soul-moa/moe
-Block 3 (7pm-11pm) OUTREACH+CAREER campaigns, blog, LinkedIn, portfolio
+Block 1: BUILD   (9am - 1pm,  4h)  Ship projects, extract code, write tests
+Block 2: EXPLORE (2pm - 6pm,  4h)  Research, analytics, CARS, finance
+Block 3: SOCIAL  (7pm - 9pm,  2h)  Content from Block 1+2 -> LinkedIn, Twitter, blog, dev.to, Reddit
+Block 4: SCOUT   (9pm - 11pm, 2h)  Job portals, freelance platforms, recruiter outreach, applications
 ```
 
 ## Quick Commands
 
-When I say **"today"**: Read `docs/daily-planner.md`, find today's date, show all 3 blocks with sub-tasks. Flag uncompleted tasks from yesterday.
+When I say **"today"**: Read `docs/daily-planner.md`, find today's date, show all 4 blocks with sub-tasks. Flag uncompleted tasks from yesterday.
 
 When I say **"status"**: Read the tracker tables at the bottom of `docs/daily-planner.md` — Extraction Tracker, Campaign Tracker, Blog Tracker, Revenue Tracker. Show current progress.
 
@@ -131,8 +132,9 @@ When I say **"sprint"**: Read `docs/daily-planner.md` for the current week. Show
 |---|---------|------|--------|------------|
 | 36 | soul-blog | PUBLIC | Spec Only | Technical blog content pipeline |
 | 37 | soul-brand | PUBLIC | Spec Only | Brand identity and visual assets |
+| 38 | claude-task-manager | PUBLIC | Spec Only | Claude Code extension: background task queue with dependencies and scheduling |
 
-**Summary**: 26 PUBLIC, 9 PRIVATE, 2 DUAL
+**Summary**: 27 PUBLIC, 9 PRIVATE, 2 DUAL
 
 ## Priority Stack
 
