@@ -21,9 +21,11 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
+from scoring import score_result
+
 
 SCRIPT_DIR = Path(__file__).parent
-DEFAULT_PROMPTS = SCRIPT_DIR.parent / "prompts" / "smoke-test.json"
+DEFAULT_PROMPTS = SCRIPT_DIR.parent / "prompts"
 DEFAULT_MODELS_DIR = Path.home() / "models"
 DEFAULT_RESULTS_DIR = SCRIPT_DIR.parent / "results"
 LLAMA_CLI = Path.home() / "llama.cpp" / "build" / "bin" / "llama-cli"
@@ -117,7 +119,21 @@ def get_model_size_gb(model_path: str) -> float:
     return round(os.path.getsize(model_path) / (1024**3), 3)
 
 
-def run_prompt(model_path: str, prompt: str, max_tokens: int = 256) -> dict:
+def poll_vram_mb() -> float:
+    """Get current GPU VRAM usage in MB via nvidia-smi."""
+    try:
+        result = subprocess.run(
+            ["nvidia-smi", "--query-gpu=memory.used", "--format=csv,noheader,nounits"],
+            capture_output=True, text=True, timeout=5,
+        )
+        if result.returncode == 0:
+            return float(result.stdout.strip().split("\n")[0])
+    except (FileNotFoundError, subprocess.TimeoutExpired, ValueError):
+        pass
+    return 0.0
+
+
+def run_prompt(model_path: str, prompt: str, max_tokens: int = 256, gpu: bool = False) -> dict:
     model_family = detect_model_family(model_path)
     formatted = format_prompt(prompt, model_family)
 
@@ -142,6 +158,7 @@ def run_prompt(model_path: str, prompt: str, max_tokens: int = 256) -> dict:
     )
 
     peak_rss_kb = 0
+    peak_vram_mb = 0.0
     pid = proc.pid
     status_path = f"/proc/{pid}/status"
 
@@ -155,6 +172,9 @@ def run_prompt(model_path: str, prompt: str, max_tokens: int = 256) -> dict:
                         break
         except (OSError, ProcessLookupError):
             pass
+        if gpu:
+            vram = poll_vram_mb()
+            peak_vram_mb = max(peak_vram_mb, vram)
         time.sleep(0.1)
 
     try:
@@ -196,26 +216,11 @@ def run_prompt(model_path: str, prompt: str, max_tokens: int = 256) -> dict:
         "latency_s": round(elapsed, 2),
         "peak_ram_mb": round(peak_rss_kb / 1024, 1),
         "tokens_per_second": round(tokens_per_second, 2),
+        "peak_vram_mb": round(peak_vram_mb, 1),
     }
 
 
-def score_result(response: str, prompt_data: dict) -> float:
-    scoring = prompt_data.get("scoring", "")
-    expected = prompt_data.get("expected_answer", "")
-    resp_lower = response.lower().strip()
-
-    if scoring == "exact_match_number":
-        # Check the last standalone number in the response
-        numbers = re.findall(r'\b(\d+)\b', response)
-        return 1.0 if numbers and numbers[-1] == expected else 0.0
-    elif scoring == "contains_function":
-        return 1.0 if expected in response else 0.0
-    elif scoring == "exact_match_label":
-        return 1.0 if expected.lower() == resp_lower else 0.0
-    return 0.0
-
-
-def run_benchmark(model_path: str, prompts: list[dict]) -> dict:
+def run_benchmark(model_path: str, prompts: list[dict], gpu: bool = False) -> dict:
     model_name = Path(model_path).stem
     model_size = get_model_size_gb(model_path)
     hardware = get_hardware_info()
@@ -233,7 +238,7 @@ def run_benchmark(model_path: str, prompts: list[dict]) -> dict:
         prompt_id = prompt_data["id"]
         print(f"\n  [{i}/{len(prompts)}] {prompt_id} ({task})...")
 
-        metrics = run_prompt(model_path, prompt_data["prompt"])
+        metrics = run_prompt(model_path, prompt_data["prompt"], gpu=gpu)
         accuracy = score_result(metrics["response"], prompt_data)
         total_accuracy += accuracy
 
@@ -247,6 +252,7 @@ def run_benchmark(model_path: str, prompts: list[dict]) -> dict:
             "latency_s": metrics["latency_s"],
             "peak_ram_mb": metrics["peak_ram_mb"],
             "tokens_per_second": metrics["tokens_per_second"],
+            "peak_vram_mb": metrics.get("peak_vram_mb", 0.0),
         }
         results.append(result)
 
@@ -263,22 +269,45 @@ def run_benchmark(model_path: str, prompts: list[dict]) -> dict:
     cars_ram = round(avg_accuracy / (avg_ram_gb * avg_latency), 4) if (avg_ram_gb * avg_latency) > 0 else 0.0
     cars_size = round(avg_accuracy / (model_size * avg_latency), 4) if (model_size * avg_latency) > 0 else 0.0
 
+    avg_vram_mb = sum(r.get("peak_vram_mb", 0) for r in results) / len(results) if results else 0.0
+
+    summary = {
+        "avg_accuracy": round(avg_accuracy, 3),
+        "avg_latency_s": round(avg_latency, 2),
+        "avg_peak_ram_mb": round(avg_ram_mb, 1),
+        "avg_tokens_per_second": round(
+            sum(r["tokens_per_second"] for r in results) / len(results), 2
+        ) if results else 0.0,
+    }
+    if gpu:
+        summary["avg_peak_vram_mb"] = round(avg_vram_mb, 1)
+
     output = {
         "model": model_name,
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "hardware": hardware,
         "model_size_gb": model_size,
         "results": results,
-        "summary": {
-            "avg_accuracy": round(avg_accuracy, 3),
-            "avg_latency_s": round(avg_latency, 2),
-            "avg_peak_ram_mb": round(avg_ram_mb, 1),
-            "avg_tokens_per_second": round(
-                sum(r["tokens_per_second"] for r in results) / len(results), 2
-            ) if results else 0.0,
-        },
+        "summary": summary,
         "cars_ram": cars_ram,
         "cars_size": cars_size,
+    }
+
+    if gpu:
+        avg_vram_gb = avg_vram_mb / 1024
+        output["cars_vram"] = round(avg_accuracy / (avg_vram_gb * avg_latency), 4) if (avg_vram_gb * avg_latency) > 0 else 0.0
+
+    categories = {}
+    for r in results:
+        cat = r["task"]
+        if cat not in categories:
+            categories[cat] = {"correct": 0, "total": 0}
+        categories[cat]["total"] += 1
+        categories[cat]["correct"] += r["accuracy"]
+
+    output["category_accuracy"] = {
+        cat: round(v["correct"] / v["total"], 3) if v["total"] > 0 else 0.0
+        for cat, v in sorted(categories.items())
     }
 
     print(f"\n  Summary: accuracy={avg_accuracy:.1%} | "
@@ -312,6 +341,10 @@ def main():
         "--max-tokens", type=int, default=256,
         help="Max tokens to generate per prompt. Default: 256",
     )
+    parser.add_argument(
+        "--gpu", action="store_true",
+        help="Enable VRAM tracking via nvidia-smi",
+    )
     args = parser.parse_args()
 
     if not LLAMA_CLI.exists():
@@ -320,12 +353,23 @@ def main():
         raise SystemExit(1)
 
     prompts_path = Path(args.prompts)
-    if not prompts_path.exists():
-        print(f"ERROR: Prompts file not found: {prompts_path}")
+    if prompts_path.is_dir():
+        prompt_files = sorted(prompts_path.glob("*.json"))
+        if not prompt_files:
+            print(f"ERROR: No .json files found in {prompts_path}")
+            raise SystemExit(1)
+        prompts = []
+        for pf in prompt_files:
+            with open(pf) as f:
+                prompts.extend(json.load(f))
+        print(f"Loaded {len(prompts)} prompts from {len(prompt_files)} files in {prompts_path}")
+    elif prompts_path.is_file():
+        with open(prompts_path) as f:
+            prompts = json.load(f)
+        print(f"Loaded {len(prompts)} prompts from {prompts_path}")
+    else:
+        print(f"ERROR: Prompts path not found: {prompts_path}")
         raise SystemExit(1)
-    with open(prompts_path) as f:
-        prompts = json.load(f)
-    print(f"Loaded {len(prompts)} prompts from {prompts_path}")
 
     if args.models:
         model_paths = args.models
@@ -346,7 +390,7 @@ def main():
         if not os.path.exists(model_path):
             print(f"WARNING: Model not found: {model_path}, skipping")
             continue
-        result = run_benchmark(model_path, prompts)
+        result = run_benchmark(model_path, prompts, gpu=args.gpu)
         all_results.append(result)
 
         model_name = Path(model_path).stem
@@ -359,15 +403,30 @@ def main():
         print(f"\n{'='*60}")
         print("COMPARISON")
         print(f"{'='*60}")
-        print(f"{'Model':<40} {'Acc':>5} {'Lat':>6} {'RAM':>7} {'CARS_R':>7} {'CARS_S':>7}")
-        print("-" * 73)
-        for r in all_results:
-            print(f"{r['model']:<40} "
-                  f"{r['summary']['avg_accuracy']:>5.1%} "
-                  f"{r['summary']['avg_latency_s']:>5.1f}s "
-                  f"{r['summary']['avg_peak_ram_mb']:>6.0f}M "
-                  f"{r['cars_ram']:>7.4f} "
-                  f"{r['cars_size']:>7.4f}")
+        if args.gpu:
+            print(f"{'Model':<40} {'Acc':>5} {'Lat':>6} {'RAM':>7} {'VRAM':>7} {'CARS_R':>7} {'CARS_S':>7} {'CARS_V':>7}")
+            print("-" * 82)
+            for r in all_results:
+                vram_mb = r["summary"].get("avg_peak_vram_mb", 0.0)
+                cars_vram = r.get("cars_vram", 0.0)
+                print(f"{r['model']:<40} "
+                      f"{r['summary']['avg_accuracy']:>5.1%} "
+                      f"{r['summary']['avg_latency_s']:>5.1f}s "
+                      f"{r['summary']['avg_peak_ram_mb']:>6.0f}M "
+                      f"{vram_mb:>6.0f}M "
+                      f"{r['cars_ram']:>7.4f} "
+                      f"{r['cars_size']:>7.4f} "
+                      f"{cars_vram:>7.4f}")
+        else:
+            print(f"{'Model':<40} {'Acc':>5} {'Lat':>6} {'RAM':>7} {'CARS_R':>7} {'CARS_S':>7}")
+            print("-" * 73)
+            for r in all_results:
+                print(f"{r['model']:<40} "
+                      f"{r['summary']['avg_accuracy']:>5.1%} "
+                      f"{r['summary']['avg_latency_s']:>5.1f}s "
+                      f"{r['summary']['avg_peak_ram_mb']:>6.0f}M "
+                      f"{r['cars_ram']:>7.4f} "
+                      f"{r['cars_size']:>7.4f}")
 
 
 if __name__ == "__main__":
