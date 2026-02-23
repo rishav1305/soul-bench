@@ -21,9 +21,11 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
+from scoring import score_result
+
 
 SCRIPT_DIR = Path(__file__).parent
-DEFAULT_PROMPTS = SCRIPT_DIR.parent / "prompts" / "smoke-test.json"
+DEFAULT_PROMPTS = SCRIPT_DIR.parent / "prompts"
 DEFAULT_MODELS_DIR = Path.home() / "models"
 DEFAULT_RESULTS_DIR = SCRIPT_DIR.parent / "results"
 LLAMA_CLI = Path.home() / "llama.cpp" / "build" / "bin" / "llama-cli"
@@ -199,22 +201,6 @@ def run_prompt(model_path: str, prompt: str, max_tokens: int = 256) -> dict:
     }
 
 
-def score_result(response: str, prompt_data: dict) -> float:
-    scoring = prompt_data.get("scoring", "")
-    expected = prompt_data.get("expected_answer", "")
-    resp_lower = response.lower().strip()
-
-    if scoring == "exact_match_number":
-        # Check the last standalone number in the response
-        numbers = re.findall(r'\b(\d+)\b', response)
-        return 1.0 if numbers and numbers[-1] == expected else 0.0
-    elif scoring == "contains_function":
-        return 1.0 if expected in response else 0.0
-    elif scoring == "exact_match_label":
-        return 1.0 if expected.lower() == resp_lower else 0.0
-    return 0.0
-
-
 def run_benchmark(model_path: str, prompts: list[dict]) -> dict:
     model_name = Path(model_path).stem
     model_size = get_model_size_gb(model_path)
@@ -281,6 +267,19 @@ def run_benchmark(model_path: str, prompts: list[dict]) -> dict:
         "cars_size": cars_size,
     }
 
+    categories = {}
+    for r in results:
+        cat = r["task"]
+        if cat not in categories:
+            categories[cat] = {"correct": 0, "total": 0}
+        categories[cat]["total"] += 1
+        categories[cat]["correct"] += r["accuracy"]
+
+    output["category_accuracy"] = {
+        cat: round(v["correct"] / v["total"], 3) if v["total"] > 0 else 0.0
+        for cat, v in sorted(categories.items())
+    }
+
     print(f"\n  Summary: accuracy={avg_accuracy:.1%} | "
           f"latency={avg_latency:.1f}s | RAM={avg_ram_mb:.0f}MB")
     print(f"  CARS_RAM={cars_ram} | CARS_Size={cars_size}")
@@ -320,12 +319,23 @@ def main():
         raise SystemExit(1)
 
     prompts_path = Path(args.prompts)
-    if not prompts_path.exists():
-        print(f"ERROR: Prompts file not found: {prompts_path}")
+    if prompts_path.is_dir():
+        prompt_files = sorted(prompts_path.glob("*.json"))
+        if not prompt_files:
+            print(f"ERROR: No .json files found in {prompts_path}")
+            raise SystemExit(1)
+        prompts = []
+        for pf in prompt_files:
+            with open(pf) as f:
+                prompts.extend(json.load(f))
+        print(f"Loaded {len(prompts)} prompts from {len(prompt_files)} files in {prompts_path}")
+    elif prompts_path.is_file():
+        with open(prompts_path) as f:
+            prompts = json.load(f)
+        print(f"Loaded {len(prompts)} prompts from {prompts_path}")
+    else:
+        print(f"ERROR: Prompts path not found: {prompts_path}")
         raise SystemExit(1)
-    with open(prompts_path) as f:
-        prompts = json.load(f)
-    print(f"Loaded {len(prompts)} prompts from {prompts_path}")
 
     if args.models:
         model_paths = args.models
