@@ -1,17 +1,17 @@
 # Soul Ecosystem — Daily Planner
 
-**Current Phase:** Phase 1 — Foundation (Weeks 1-2, Feb 22 - Mar 7)
-**Strategy:** Build-Ship-Learn Flywheel (5 parallel tracks)
-**Plans:** `docs/plans/2026-02-22-execution-plan-design.md`, `docs/plans/2026-02-22-dev-strategy-design.md`, `docs/plans/2026-02-22-marketing-strategy-design.md`, `docs/plans/2026-02-23-daily-content-strategy-design.md`
+**Current Phase:** Phase 1 — soul-planner (Weeks 1-2)
+**Strategy:** Sequential Focus on 5 Projects (`docs/plans/2026-02-23-focused-dev-strategy-design.md`)
+**Content:** Daily content pipeline (`docs/plans/2026-02-23-daily-content-strategy-design.md`)
 
 ## Daily Rhythm
 
 ```
 BLOCK 1: BUILD (9am - 1pm, 4h)
-  Ship products, extract code, write tests
+  Current phase project ONLY
 
 BLOCK 2: EXPLORE (2pm - 6pm, 4h)
-  Research, analytics, CARS benchmark, finance, DuckDB
+  Research that feeds current project
 
 BLOCK 3: SOCIAL (7pm - 9pm, 2h)
   Content from Block 1+2 -> LinkedIn, Twitter, blog, dev.to, Reddit
@@ -20,15 +20,27 @@ BLOCK 4: SCOUT (9pm - 11pm, 2h)
   Job portals, freelance platforms, recruiter outreach, applications
 ```
 
+## Build Order
+
+```
+Phase 1: soul-planner    (Weeks 1-2)   <- NOW
+Phase 2: soul-mesh        (Weeks 3-5)
+Phase 3: soul-outreach    (Weeks 6-8)
+Phase 4: soul-viz         (Weeks 9-10)
+Ongoing: soul-os          (side-effects)
+```
+
 ## Legend
 
 `[x]` done | `[ ]` pending | `[>]` in progress | `[-]` skipped | `[!]` blocked
 
 ---
 
-# WEEK 1: Foundation (Feb 22 - Feb 28)
+# PHASE 1: soul-planner (Feb 22 - Mar 7)
 
-## Day 1 — Sun Feb 22
+**Milestone:** `/task add "do X"` queues a task, Claude executes it in background, output captured.
+
+## Day 1 — Sat Feb 22
 
 ### Block 1: BUILD — soul-mesh continued (9am-1pm)
 - [x] Review soul-mesh current state (16 tests, node/discovery/election done)
@@ -42,275 +54,247 @@ BLOCK 4: SCOUT (9pm - 11pm, 2h)
 - [x] Run smoke test: simple prompt, verify inference works
 - [x] Document hardware baseline: inference speed, memory usage
 
-### Block 3: MARKET — job portal profiles (7pm-11pm)
-- [ ] Create Naukri profile, upload resume, set job preferences (AI/ML/Data, Delhi/Bangalore/Remote)
-- [ ] Create Indeed profile, upload resume, set alerts for "AI Engineer" + "Data Engineer"
-- [ ] Create Instahyre profile, enable "let companies find me"
-- [ ] Read `docs/plans/2026-02-22-marketing-execution-plan.md` Task 1 for profile content
-
-### Evening Review (11pm, 15min)
-- [ ] Log what got done, note blockers, set tomorrow's focus
+### Block 3: MARKET (7pm-11pm)
+- [-] (Strategy not yet defined — redesigned on Day 2)
 
 ---
 
-## Day 2 — Mon Feb 23
+## Day 2 — Sun Feb 23
 
-### Block 1: BUILD — soul-skills standalone (9am-1pm)
-- [ ] Create `soul_skills/config.py` with `SKILLS_` env prefix (pydantic-settings)
-- [ ] Replace all `soul.*` / `brain.*` imports with standalone equivalents
-- [ ] Verify: `grep -r "from soul\|from brain" soul_skills/` returns ZERO
-- [ ] Commit: standalone conversion
+### Block 1: BUILD — Strategy redesign (9am-1pm)
+- [x] Redesign dev strategy: 37 projects -> 5 focused projects
+- [x] Define milestones for each project
+- [x] Write design doc: `docs/plans/2026-02-23-focused-dev-strategy-design.md`
+- [x] Update CLAUDE.md with new 5-project focus
+- [x] Set up 4-block daily rhythm (BUILD/EXPLORE/SOCIAL/SCOUT)
+- [x] Write content strategy: `docs/plans/2026-02-23-daily-content-strategy-design.md`
 
-### Block 2: EXPLORE — soul-bench scaffolding (2pm-6pm)
-- [ ] Review existing soul-bench scaffold at `~/soul/soul-bench/`
-- [ ] Design 10 benchmark tasks (from soul-os task types)
-- [ ] Implement CARS metric calculator: `CARS = Accuracy / (VRAM_GB x Latency_s)`
-- [ ] Set up Colab Pro notebook for T4 GPU benchmark runs
+### Block 2: EXPLORE — soul-planner research (2pm-6pm)
+- [ ] Research Claude Code extension patterns (skills, agents, slash commands)
+- [ ] Study existing task management in Claude Code (Task tool, TodoWrite)
+- [ ] Design soul-planner architecture (queue + schedule modes)
+- [ ] Identify what can be built as skills vs agents vs standalone code
 
 ### Block 3: SOCIAL — first daily content (7pm-9pm)
-- [ ] Set up content-log: create `docs/content-log.md`
-- [ ] Draft LinkedIn post from today's BUILD work (soul-skills extraction)
-- [ ] Draft Twitter thread from today's EXPLORE work (soul-bench scaffolding)
+- [ ] Create `docs/content-log.md` with today's BUILD notes
+- [ ] Draft LinkedIn post: "Cutting from 37 projects to 5 that matter"
+- [ ] Adapt to Twitter thread
 - [ ] Post after user approval
 
-### Block 4: SCOUT — job portals continued (9pm-11pm)
-- [ ] Create Wellfound profile, follow target companies from `docs/marketing/target-companies.md`
-- [ ] Create Monster India profile, upload resume
+### Block 4: SCOUT — job portal setup (9pm-11pm)
+- [ ] Create Naukri profile, upload resume
+- [ ] Create Indeed profile, set alerts for "AI Engineer" + "Data Engineer"
 - [ ] Enable LinkedIn "Open to Work" (visible to recruiters only)
-- [ ] Scan LinkedIn Jobs + Naukri, apply to 3-5 best matches
 
 ### Evening Review (11pm, 15min)
-- [ ] soul-skills standalone? Benchmark design done? Content posted? Portals count?
+- [ ] Strategy redesign done? Planner research started? Content posted?
 
 ---
 
-## Day 3 — Tue Feb 24
+## Day 3 — Mon Feb 24
 
-### Block 1: BUILD — soul-skills tests + soul-goals extraction (9am-1pm)
-- [ ] Write tests for soul-skills (target: 15+ tests covering core functionality)
-- [ ] Run tests: `cd ~/soul/soul-skills && python -m pytest tests/ -v`
-- [ ] Push soul-skills to Gitea
-- [ ] Start soul-goals: extract 5 files from titan-pc backup to `~/soul/soul-goals/`
+### Block 1: BUILD — soul-planner repo + task model (9am-1pm)
+- [ ] Create `~/soul/soul-planner/` repo structure (pyproject.toml, README, CLAUDE.md)
+- [ ] Define SQLite schema: tasks table (id, title, description, status, priority, depends_on, output, created_at)
+- [ ] Implement `planner/db.py` — async SQLite wrapper for task CRUD
+- [ ] Implement `planner/models.py` — Pydantic models (TaskCreate, TaskStatus, TaskResult)
+- [ ] Write tests for db layer (target: 10+ tests)
 
-### Block 2: EXPLORE — CARS baseline runs (2pm-6pm)
-- [ ] Run Phi-3-mini 3B 4-bit through benchmark tasks on titan-pc
-- [ ] Record: accuracy per task, latency, VRAM usage
-- [ ] Calculate CARS score
-- [ ] Start Colab notebook: run same benchmark on T4 for comparison
+### Block 2: EXPLORE — Claude Code Task tool internals (2pm-6pm)
+- [ ] Read Claude Code docs on Task tool, run_in_background, subagent_type
+- [ ] Experiment: spawn a background task, capture its output
+- [ ] Understand how skills and agents interact with Task tool
+- [ ] Document findings for soul-planner integration
+
+### Block 3: SOCIAL — deep dive post (7pm-9pm)
+- [ ] Review Block 1+2 notes from content-log
+- [ ] Draft LinkedIn post: "Building a task planner for Claude Code" (Mon = Deep Dive)
+- [ ] Adapt to Twitter thread
+- [ ] Post after user approval
+
+### Block 4: SCOUT — more portals (9pm-11pm)
+- [ ] Create Wellfound profile
+- [ ] Create Instahyre profile
+- [ ] Scan LinkedIn Jobs, apply to 3-5 matches
+
+### Evening Review (11pm, 15min)
+- [ ] Task model + DB working? Tests passing? Content posted?
+
+---
+
+## Day 4 — Tue Feb 25
+
+### Block 1: BUILD — soul-planner queue mode (9am-1pm)
+- [ ] Implement `/task add` slash command (SKILL.md)
+- [ ] Implement `/task list` — show all tasks with status
+- [ ] Implement `/task status <id>` — detailed view
+- [ ] Implement `/task cancel <id>`
+- [ ] Symlink skill into `~/.claude/skills/planner/`
+
+### Block 2: EXPLORE — task scheduling patterns (2pm-6pm)
+- [ ] Research priority queue algorithms (for task ordering)
+- [ ] Research dependency resolution (topological sort for depends_on)
+- [ ] Prototype: given tasks with dependencies, produce execution order
+- [ ] Design schedule mode: how to read daily-planner.md and auto-queue
 
 ### Block 3: SOCIAL — metrics post (7pm-9pm)
 - [ ] Review Block 1+2 notes from content-log
-- [ ] Draft LinkedIn post: CARS baseline metrics (Tue = Metrics Post)
+- [ ] Draft LinkedIn post: task scheduling metrics or architecture (Tue = Metrics)
 - [ ] Adapt to Twitter thread
 - [ ] Post after user approval
 
-### Block 4: SCOUT — freelance platforms batch 1 (9pm-11pm)
-- [ ] Prepare freelance-specific profile content (headline, summary, rate, portfolio)
-- [ ] Apply to Toptal (screening + timed test)
-- [ ] Apply to Turing (automated coding tests)
-- [ ] Apply to Andela (interview-based)
-- [ ] Set up Twitter/X profile for tech content
+### Block 4: SCOUT — freelance platforms (9pm-11pm)
+- [ ] Apply to Toptal (screening)
+- [ ] Apply to Turing (coding test)
+- [ ] Connect with 5 recruiters on LinkedIn
 
 ### Evening Review (11pm, 15min)
-- [ ] soul-skills tests passing? Goals extraction started? CARS results?
+- [ ] `/task add` and `/task list` working? Scheduling research done?
 
 ---
 
-## Day 4 — Wed Feb 25
+## Day 5 — Wed Feb 26
 
-### Block 1: BUILD — soul-goals standalone + tests (9am-1pm)
-- [ ] Create project structure: `pyproject.toml`, `README.md`, `CLAUDE.md`, `.gitignore`
-- [ ] Create `soul_goals/config.py` with `GOALS_` env prefix
-- [ ] Replace all `soul.*` / `brain.*` imports with standalone equivalents
-- [ ] Write tests (target: 10+ tests)
-- [ ] Run tests: `cd ~/soul/soul-goals && python -m pytest tests/ -v`
-- [ ] Init git, commit, push to Gitea
+### Block 1: BUILD — soul-planner runner (9am-1pm)
+- [ ] Implement `planner/runner.py` — picks next task (priority + deps), spawns Claude Code Task tool
+- [ ] Implement background execution with `run_in_background: true`
+- [ ] Implement output capture (read task output, store in DB)
+- [ ] Implement `/task output <id>` — view captured output
+- [ ] Write tests for runner (mock Task tool)
 
-### Block 2: EXPLORE — DuckDB analytics setup (2pm-6pm)
-- [ ] Create `~/soul/soul-analytics/` repo structure
-- [ ] Install DuckDB, set up initial database
-- [ ] Load first dataset: market data from Yahoo Finance (1 year NSE index)
-- [ ] Write first analysis notebook: basic market stats, moving averages
-- [ ] Commit: soul-analytics foundation
+### Block 2: EXPLORE — schedule mode design (2pm-6pm)
+- [ ] Design daily-planner.md parser (extract block tasks as queueable items)
+- [ ] Prototype: parse today's block, output task list
+- [ ] Design auto-queue trigger (when does schedule mode kick in?)
+- [ ] Document schedule mode spec
 
-### Block 3: SOCIAL — architecture diagram (7pm-9pm)
+### Block 3: SOCIAL — architecture post (7pm-9pm)
 - [ ] Review Block 1+2 notes from content-log
-- [ ] Draft LinkedIn post: soul-goals architecture or DuckDB analytics setup (Wed = Architecture)
+- [ ] Draft LinkedIn post: soul-planner architecture diagram (Wed = Architecture)
 - [ ] Adapt to Twitter thread with diagram
 - [ ] Post after user approval
 
-### Block 4: SCOUT — freelance platforms batch 2 + recruiter outreach (9pm-11pm)
-- [ ] Apply to Uplers (profile review + skill test)
-- [ ] Apply to Arc.dev (async coding challenge)
-- [ ] Connect with 5 recruiters on LinkedIn (search "AI recruiter India")
-- [ ] Register with 1-2 recruitment agencies (Michael Page, Hays India)
+### Block 4: SCOUT — applications (9pm-11pm)
+- [ ] Apply to Andela
+- [ ] Scan job portals, apply to 3-5 roles
+- [ ] Follow up on any recruiter responses
 
 ### Evening Review (11pm, 15min)
-- [ ] soul-goals done? Analytics loaded? Content posted? Freelance apps count?
+- [ ] Runner executing tasks? Schedule mode designed?
 
 ---
 
-## Day 5 — Thu Feb 26
+## Day 6 — Thu Feb 27
 
-### Block 1: BUILD — push to GitHub + soul-outreach continued (9am-1pm)
-- [ ] Push soul-skills to GitHub (public repo, clean README)
-- [ ] Push soul-goals to GitHub (public repo, clean README)
-- [ ] Verify both: CI-ready, `pip install -e .` works
-- [ ] soul-outreach: review current state, identify next module to build (pipeline or CLI)
+### Block 1: BUILD — soul-planner schedule mode + polish (9am-1pm)
+- [ ] Implement `planner/scheduler.py` — reads daily-planner.md, auto-queues block tasks
+- [ ] Implement `/task run` — starts the runner (picks up queued tasks)
+- [ ] Implement `/task retry <id>` — retry failed tasks
+- [ ] Error handling: task failures, retries with backoff
+- [ ] Write agent definition: `agents/task-runner.md`
 
-### Block 2: EXPLORE — Zerodha + finance setup (2pm-6pm)
-- [ ] Create `~/soul/soul-finance/` repo structure
-- [ ] Set up Yahoo Finance data ingestion (yfinance library)
-- [ ] Pull 1 year of NSE Nifty 50 daily data into DuckDB
-- [ ] Implement basic momentum strategy: buy when 20-day MA > 50-day MA
-- [ ] Backtest on historical data, record results
+### Block 2: EXPLORE — integration testing (2pm-6pm)
+- [ ] End-to-end test: `/task add "create a hello world file"` -> runs -> check output
+- [ ] Test dependency chain: Task A -> Task B (B waits for A)
+- [ ] Test schedule mode: parse today's planner, queue tasks, run
+- [ ] Fix bugs found during integration testing
 
-### Block 3: SOCIAL — opinion/insight post (7pm-9pm)
+### Block 3: SOCIAL — opinion post (7pm-9pm)
 - [ ] Review Block 1+2 notes from content-log
-- [ ] Draft LinkedIn post: opinion piece (Thu = Opinion/Insight)
+- [ ] Draft LinkedIn post: opinion on AI task automation (Thu = Opinion)
 - [ ] Adapt to Twitter thread
-- [ ] Join r/selfhosted, r/MachineLearning — comment with genuine value
 - [ ] Post after user approval
 
-### Block 4: SCOUT — communities + recruiter outreach (9pm-11pm)
-- [ ] Join MLOps Community Slack (introduce yourself)
-- [ ] Join Latent Space Discord (lurk, find relevant threads)
+### Block 4: SCOUT — recruiter outreach (9pm-11pm)
 - [ ] Connect with 5 more recruiters on LinkedIn
-- [ ] Scan LinkedIn Jobs + Naukri, apply to 3-5 best matches
+- [ ] Join MLOps Community Slack
+- [ ] Scan portals, apply to 3-5 roles
 
 ### Evening Review (11pm, 15min)
-- [ ] GitHub repos live? Finance backtest results? Content posted? Communities joined?
+- [ ] End-to-end working? Schedule mode functional?
 
 ---
 
-## Day 6 — Fri Feb 27
+## Day 7 — Fri Feb 28
 
-### Block 1: BUILD — soul-outreach pipeline (9am-1pm)
-- [ ] soul-outreach: build next priority module (pipeline, email sender, or CLI)
-- [ ] Write tests for new module
-- [ ] Verify: all existing tests still pass
-- [ ] Commit progress
+### Block 1: BUILD — soul-planner ship (9am-1pm)
+- [ ] README.md with usage examples and setup guide
+- [ ] Verify all symlinks work (skill, agent)
+- [ ] Run full test suite, fix any failures
+- [ ] Git init, commit, push to Gitea
+- [ ] Push to GitHub (public repo)
 
-### Block 2: EXPLORE — CARS results + paper trading (2pm-6pm)
-- [ ] Finalize CARS baseline results for 3B model (4-bit quantization)
-- [ ] Write up results: accuracy per task, CARS score, comparison notes
-- [ ] soul-finance: implement paper trading simulator (no real money)
-- [ ] Run momentum strategy on recent 30 days, track simulated P&L
+### Block 2: EXPLORE — soul-mesh prep (2pm-6pm)
+- [ ] Review soul-mesh current state (253 tests, what's missing)
+- [ ] Research: unified SSH gateway approaches (how to present multiple machines as one)
+- [ ] Research: shared filesystem patterns (rsync, NFS, custom)
+- [ ] Plan Phase 2 (soul-mesh) first week priorities
 
-### Block 3: SOCIAL — weekly progress post (7pm-9pm)
+### Block 3: SOCIAL — weekly progress + blog (7pm-9pm)
 - [ ] Review content-log for the full week
 - [ ] Draft LinkedIn post: week's highlights (Fri = Weekly Progress)
-- [ ] Adapt to Twitter thread
-- [ ] Post after user approval
-
-### Block 4: SCOUT — applications + follow-ups (9pm-11pm)
-- [ ] Scan job portals, apply to 5-8 roles (LinkedIn Jobs, Naukri, Indeed)
-- [ ] Respond to any recruiter messages from the week
-- [ ] Follow up on pending applications (1 week old+)
-
-### Evening Review (11pm, 15min)
-- [ ] Outreach module done? CARS documented? Content posted? Applications count?
-
----
-
-## Day 7 — Sat Feb 28
-
-### Block 1: BUILD — soul-mesh continued (9am-1pm)
-- [ ] soul-mesh: identify next modules to extract (transport, sync, relay)
-- [ ] Build next module with tests
-- [ ] Verify: all 16+ tests still pass
-- [ ] Commit progress
-
-### Block 2: EXPLORE — analytics insight + research review (2pm-6pm)
-- [ ] soul-analytics: produce first data insight (market trend visualization)
-- [ ] Format as LinkedIn-ready chart/insight
-- [ ] Review all CARS data collected this week, identify gaps
-- [ ] Plan Week 2 EXPLORE priorities (extended CARS? more finance data?)
-
-### Block 3: SOCIAL — blog assembly (7pm-9pm)
-- [ ] Pull Mon-Fri LinkedIn posts from content-log
-- [ ] Pick 2-3 strongest themes from the week
-- [ ] Assemble into 600-1000 word blog post
-- [ ] Publish on blog (canonical), cross-post to dev.to
+- [ ] Assemble week's posts into 600-1000 word blog post
+- [ ] Publish on blog, cross-post to dev.to
 - [ ] Share blog link on LinkedIn + Twitter
 
-### Block 4: SCOUT — week review + refresh (9pm-11pm)
-- [ ] Review Instahyre/Wellfound inbound matches
-- [ ] Refresh Naukri profile (triggers "recently active" boost)
-- [ ] Plan next week's SCOUT priorities
-- [ ] Log weekly SCOUT metrics (applications, responses, interviews)
+### Block 4: SCOUT — week review (9pm-11pm)
+- [ ] Review all inbound matches (Instahyre, Wellfound, Naukri)
+- [ ] Refresh portal profiles
+- [ ] Log weekly SCOUT metrics
+- [ ] Plan next week's applications
 
 ### Week 1 Review (11pm, 30min)
 ```
 ## Week 1 Review — Feb 28
-### Block 1 (BUILD)
-- soul-skills: extracted? [ ] standalone? [ ] tests? [ ] Gitea? [ ] GitHub? [ ]
-- soul-goals: extracted? [ ] standalone? [ ] tests? [ ] Gitea? [ ] GitHub? [ ]
-- soul-outreach: next module done? [ ]
-- soul-mesh: continued? [ ]
 
-### Block 2 (EXPLORE)
-- CARS baseline 3B results: [ ]
-- soul-finance repo + backtest: [ ]
-- soul-analytics + first dataset: [ ]
-- soul-bench scaffolded: [ ]
+### Phase 1 Progress (soul-planner)
+- Task model + SQLite DB: [ ]
+- Queue mode (/task add, list, status, cancel): [ ]
+- Runner (background execution + output capture): [ ]
+- Schedule mode (daily-planner parser): [ ]
+- Integration tested: [ ]
+- README + shipped to GitHub: [ ]
+- MILESTONE: "Queue a task, Claude executes it" [ ]
 
 ### Block 3 (SOCIAL)
 - LinkedIn posts published: __ / 5
 - Twitter threads published: __ / 5
-- Blog post #1 status: assembled [ ] published [ ] cross-posted [ ]
+- Blog post #1: assembled [ ] published [ ] cross-posted [ ]
 - Content-log entries: __
 
 ### Block 4 (SCOUT)
-- Job portals live: __ / 6
-- Freelance platforms applied: __ / 5
-- Recruiter connections: __ / 10
-- Communities joined: __ / 3
+- Job portals live: __ / 4
+- Freelance platforms applied: __ / 3
+- Recruiter connections: __
 - Job applications submitted: __
 
-### Phase 1 Gate Progress (need 6/8 by end of Week 2)
-- [ ] soul-skills extracted with tests, on GitHub
-- [ ] soul-goals extracted with tests, on GitHub
-- [ ] CARS baseline results for 3B models
-- [ ] soul-finance repo with data ingestion working
-- [ ] 6 job portal profiles live
-- [ ] 5+ freelance platform applications submitted
-- [ ] 5 LinkedIn posts published
-- [ ] Blog post #1 published
-
-### Week 2 Adjustments
-- ...
+### Next Phase Prep
+- soul-mesh research done? [ ]
+- Phase 2 plan ready? [ ]
 ```
 
 ---
 
 # TRACKING
 
-## Extraction Tracker
+## Project Milestones
 
-| # | Project | Extracted | Standalone | Tests | Gitea | GitHub |
-|---|---------|-----------|------------|-------|-------|--------|
-| 1 | soul-search | [x] | [x] | [x] 15 | [x] | [ ] |
-| 2 | soul-import | [x] | [x] | [x] 54 | [x] | [ ] |
-| 3 | soul-query | [x] scaffold | [x] | [ ] | [x] | [ ] |
-| 4 | soul-viz | [x] scaffold | [x] | [ ] | [x] | [ ] |
-| 5 | soul-skills | [ ] | [ ] | [ ] | [ ] | [ ] |
-| 6 | soul-goals | [ ] | [ ] | [ ] | [ ] | [ ] |
-| 7 | soul-brain | [ ] | [ ] | [ ] | [ ] | [ ] |
-| 8 | soul-agents | [ ] | [ ] | [ ] | [ ] | [ ] |
-| 9 | soul-outreach | [>] partial | [>] | [ ] | [ ] | [ ] |
-| 10 | soul-mesh | [x] complete | [x] | [x] 100 | [ ] | [ ] |
+| # | Project | Milestone | Status |
+|---|---------|-----------|--------|
+| 1 | soul-planner | Queue tasks, Claude executes in background | [ ] In progress |
+| 2 | soul-mesh | SSH into mesh as one machine, run LLM inference | [ ] Waiting |
+| 3 | soul-outreach | CLI pipeline: import -> enrich -> draft -> send | [ ] Waiting |
+| 4 | soul-viz | POST data + prompt, get rendered chart | [ ] Waiting |
+| 5 | soul-os | Autonomous loop uses soul-planner | [ ] Waiting |
 
-## Research Tracker
+## Content Tracker
 
-| Experiment | Setup | Running | Results | Published |
-|-----------|-------|---------|---------|-----------|
-| CARS baseline 3B 4-bit | [ ] | [ ] | [ ] | [ ] |
-| CARS extended 8B | [ ] | [ ] | [ ] | [ ] |
-| Finance momentum backtest | [ ] | [ ] | [ ] | [ ] |
-| Finance mean-reversion backtest | [ ] | [ ] | [ ] | [ ] |
+| Week | LinkedIn | Twitter | Blog | dev.to |
+|------|----------|---------|------|--------|
+| 1 (Feb 22-28) | __ / 5 | __ / 5 | __ / 1 | __ / 1 |
+| 2 (Mar 1-7) | | | | |
 
-## Marketing Tracker
+## Scout Tracker
 
 | Channel | Setup | Active | Metric |
 |---------|-------|--------|--------|
@@ -318,26 +302,11 @@ BLOCK 4: SCOUT (9pm - 11pm, 2h)
 | Indeed | [ ] | [ ] | applications: __ |
 | Instahyre | [ ] | [ ] | inbound matches: __ |
 | Wellfound | [ ] | [ ] | applications: __ |
-| Monster India | [ ] | [ ] | recruiter views: __ |
 | LinkedIn Jobs | [ ] | [ ] | applications: __ |
 | Toptal | [ ] | [ ] | status: __ |
 | Turing | [ ] | [ ] | status: __ |
 | Andela | [ ] | [ ] | status: __ |
-| Uplers | [ ] | [ ] | status: __ |
-| Arc.dev | [ ] | [ ] | status: __ |
-| LinkedIn Posts | [ ] | [ ] | posts: __ / impressions: __ |
-| Blog | [ ] | [ ] | posts: __ / views: __ |
-| Twitter/X | [ ] | [ ] | tweets: __ |
-| Communities | [ ] | [ ] | joined: __ / 3 |
-| Recruiters | [ ] | [ ] | connected: __ / 10 |
-
-## Blog Tracker
-
-| # | Title | Outline | Draft | Published | Shared |
-|---|-------|---------|-------|-----------|--------|
-| 1 | How I Architect 37 Projects as a Solo AI Engineer | [ ] | [ ] | [ ] | [ ] |
-| 2 | Self-Healing AI: Hysteresis + Remediation | [ ] | [ ] | [ ] | [ ] |
-| 3 | NL-to-SQL with Guardrails | [ ] | [ ] | [ ] | [ ] |
+| Recruiters | [ ] | [ ] | connected: __ |
 
 ## Revenue Tracker
 
@@ -353,21 +322,17 @@ BLOCK 4: SCOUT (9pm - 11pm, 2h)
 
 ```
 ## Day __ Review — [date]
-### Block 1 (BUILD)
+### Block 1 (BUILD — soul-planner)
 - Completed: ...
 - Blocked: ...
 ### Block 2 (EXPLORE)
 - Completed: ...
 - Blocked: ...
-### Block 3 (MARKET)
-- Completed: ...
-- Blocked: ...
-### Metrics
-- Job applications submitted: __
-- LinkedIn posts: __
-- Code commits: __
+### Block 3 (SOCIAL)
+- Posts: ...
+### Block 4 (SCOUT)
+- Applications: ...
 ### Tomorrow Focus
 1. ...
 2. ...
-3. ...
 ```
