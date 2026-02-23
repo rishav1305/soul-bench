@@ -3,12 +3,11 @@
 from __future__ import annotations
 
 from datetime import date
-from pathlib import Path
 
 import pytest
 
 from soul_planner.db import TaskDB
-from soul_planner.models import Priority, TaskCreate
+from soul_planner.models import Priority
 from soul_planner.scheduler import parse_planner, schedule_tasks
 
 SAMPLE_PLANNER = """\
@@ -157,7 +156,7 @@ class TestScheduleTasks:
         planner_file = tmp_path / "daily-planner.md"
         planner_file.write_text(SAMPLE_PLANNER)
 
-        ids = await schedule_tasks(db, planner_path=planner_file, target_date=date(2026, 2, 23), block_filter=1)
+        await schedule_tasks(db, planner_path=planner_file, target_date=date(2026, 2, 23), block_filter=1)
         tasks = await db.list()
         # Only Block 1 tasks
         for t in tasks:

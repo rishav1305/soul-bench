@@ -11,6 +11,7 @@ import re
 from datetime import date
 from pathlib import Path
 
+import aiofiles
 import structlog
 
 from soul_planner.db import TaskDB
@@ -138,7 +139,13 @@ async def schedule_tasks(
     path = planner_path or DEFAULT_PLANNER_PATH
     today = target_date or date.today()
 
-    content = path.read_text()
+    # Validate path exists before reading
+    if not path.exists():
+        logger.error("Planner file not found", path=str(path))
+        return []
+
+    async with aiofiles.open(path, encoding="utf-8") as f:
+        content = await f.read()
     parsed = parse_planner(content, today, block_filter)
 
     if not parsed:

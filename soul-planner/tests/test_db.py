@@ -263,7 +263,7 @@ class TestDependencies:
 
     async def test_promote_ready_counts(self, db):
         t1 = await db.add(TaskCreate(title="No deps"))
-        t2 = await db.add(TaskCreate(title="Has dep", depends_on=[t1.id]))
+        await db.add(TaskCreate(title="Has dep", depends_on=[t1.id]))
         count = await db.promote_ready()
         # t1 has no deps -> ready; t2 has unmet dep -> not ready
         assert count == 1

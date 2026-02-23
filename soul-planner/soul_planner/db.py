@@ -209,6 +209,8 @@ class TaskDB:
         if not existing:
             raise ValueError(f"Task {task_id} not found")
 
+        # Only hardcoded column names are appended to `sets`.
+        # Do NOT append user-supplied strings — values belong in `params`.
         sets: list[str] = []
         params: list = []
 

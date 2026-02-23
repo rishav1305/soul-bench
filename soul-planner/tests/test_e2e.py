@@ -8,16 +8,15 @@ round-trips, and the runner advancement pipeline.
 from __future__ import annotations
 
 from datetime import date
-from pathlib import Path
 
 import pytest
 from click.testing import CliRunner
 
 from soul_planner.cli import main
 from soul_planner.db import TaskDB
-from soul_planner.models import Priority, Substep, TaskCreate, TaskStatus, TaskUpdate
+from soul_planner.models import Priority, Substep, TaskCreate, TaskStatus
 from soul_planner.runner import TaskRunner, substep_label
-from soul_planner.scheduler import parse_planner, schedule_tasks
+from soul_planner.scheduler import schedule_tasks
 
 
 # ---------------------------------------------------------------------------
@@ -469,7 +468,7 @@ class TestPriorityQueue:
     async def test_oldest_within_same_priority(self, db, runner):
         """Among same-priority tasks, oldest is picked first."""
         t1 = await db.add(TaskCreate(title="First normal"))
-        t2 = await db.add(TaskCreate(title="Second normal"))
+        await db.add(TaskCreate(title="Second normal"))
 
         next_task = await runner.pick_next()
         assert next_task.id == t1.id  # oldest first
