@@ -1,6 +1,6 @@
 ---
 name: block-execution
-description: Use when starting any daily planner block (BUILD, EXPLORE, or MARKET). Enforces the full plan-implement-test-review-commit workflow with model-optimized steps.
+description: Use when starting any daily planner block (BUILD, EXPLORE, SOCIAL, or SCOUT). Enforces the full plan-implement-test-review-commit workflow with model-optimized steps.
 ---
 
 # Block Execution Workflow
@@ -10,8 +10,8 @@ Structured workflow for executing a daily planner block. Every block goes throug
 ## Trigger
 
 Start this workflow when:
-- Beginning a BUILD, EXPLORE, or MARKET block from the daily planner
-- User says "let's start Block 1/2/3" or "let's work on today's tasks"
+- Beginning a BUILD, EXPLORE, SOCIAL, or SCOUT block from the daily planner
+- User says "let's start Block 1/2/3/4" or "let's work on today's tasks"
 - User says "start the block"
 
 ## Workflow
@@ -94,8 +94,11 @@ digraph block_execution {
 
 ### 5. EXECUTE — Implement in batches of 3
 **Model: sonnet** (tests constrain the work — implementation is well-defined)
-**Skill:** `superpowers:executing-plans`
+**Default: Subagent-Driven** (this session, no need to ask)
+**Skill:** `superpowers:subagent-driven-development`
 
+- Use subagent-driven-development by default -- dispatch fresh subagent per task, review between tasks
+- Do NOT ask which execution approach -- always use subagent-driven unless user explicitly requests parallel session
 - Implement 3 tasks per batch
 - After each batch: report what was done, show verification output
 - **STOP and wait for user feedback** before next batch
