@@ -5,7 +5,7 @@ allowed-tools: [Bash, Read, Write, Edit, Glob, Grep, Task, TaskCreate, TaskUpdat
 model: opus
 ---
 
-# /task-run -- Execute a Task
+# /planner-run -- Execute a Task
 
 Pick up a task from the queue and execute it through the full dev workflow.
 

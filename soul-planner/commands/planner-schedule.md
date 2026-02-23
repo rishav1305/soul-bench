@@ -4,7 +4,7 @@ argument-hint: "[block-number]"
 allowed-tools: [Bash, Read, TaskCreate, TaskUpdate, TaskList]
 ---
 
-# /task-schedule -- Queue Tasks from Daily Planner
+# /planner-schedule -- Queue Tasks from Daily Planner
 
 Parse `~/soul/docs/daily-planner.md`, find today's date, and queue uncompleted tasks into the soul-planner backlog.
 
@@ -36,13 +36,13 @@ Parse `~/soul/docs/daily-planner.md`, find today's date, and queue uncompleted t
 ## Example
 
 ```
-/task-schedule 1
+/planner-schedule 1
 ```
 
 Parses Block 1 (BUILD) for today, queues all uncompleted tasks.
 
 ```
-/task-schedule
+/planner-schedule
 ```
 
 Parses all 4 blocks for today, queues everything uncompleted.

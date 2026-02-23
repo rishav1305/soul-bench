@@ -4,7 +4,7 @@ argument-hint: "<add|list|board|status|cancel|block|unblock|done|substep|next> [
 allowed-tools: [Bash, Read, TaskCreate, TaskUpdate, TaskList]
 ---
 
-# /task -- Task Queue Manager
+# /planner -- Task Queue Manager
 
 Manage the soul-planner task queue. All task data persists in SQLite across sessions.
 
@@ -50,7 +50,7 @@ Show output to user in a clean table format.
 python -m soul_planner board
 ```
 
-Show the Kanban board output. This is the default if user just says `/task` with no arguments.
+Show the Kanban board output. This is the default if user just says `/planner` with no arguments.
 
 ### status ID
 
