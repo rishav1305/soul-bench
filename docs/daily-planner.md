@@ -81,10 +81,12 @@ Ongoing: soul-os          (side-effects)
 - [ ] Identify what can be built as skills vs agents vs standalone code
 
 ### Block 3: SOCIAL — first daily content (7pm-9pm)
-- [ ] Create `docs/content-log.md` with today's BUILD notes
-- [ ] Draft LinkedIn post: "Cutting from 37 projects to 5 that matter"
-- [ ] Adapt to Twitter thread
-- [ ] Post after user approval
+- [ ] CAPTURE: Pull git commits from last 72h, update content-log
+- [ ] CAPTURE: Review post-log (nothing posted yet)
+- [ ] STRATEGY: Architect picks topic (Sun = no LinkedIn theme day, Twitter only)
+- [ ] DRAFT: Short-form agent drafts 1-2 tweets (build-in-public: strategy redesign + soul-planner kickoff)
+- [ ] PUBLISH: Post tweets after user approval
+- [ ] TRACK: Log posts to `docs/post-log.md`
 
 ### Block 4: SCOUT — job portal setup (9pm-11pm)
 - [x] Create Naukri profile, upload resume
@@ -111,11 +113,13 @@ Ongoing: soul-os          (side-effects)
 - [ ] Understand how skills and agents interact with Task tool
 - [ ] Document findings for soul-planner integration
 
-### Block 3: SOCIAL — deep dive post (7pm-9pm)
-- [ ] Review Block 1+2 notes from content-log
-- [ ] Draft LinkedIn post: "Building a task planner for Claude Code" (Mon = Deep Dive)
-- [ ] Adapt to Twitter thread
-- [ ] Post after user approval
+### Block 3: SOCIAL — Mon = AI Engineering (7pm-9pm)
+- [ ] CAPTURE: Pull git commits (72h), update content-log, review post-log
+- [ ] STRATEGY: Architect picks topic (Mon = AI Engineering for LinkedIn)
+- [ ] DRAFT: Long-form agent drafts LinkedIn post (soul-planner architecture)
+- [ ] DRAFT: Short-form agent drafts 1-2 tweets (build-in-public updates)
+- [ ] PUBLISH: Post after user approval, engage on Reddit (r/LocalLLaMA)
+- [ ] TRACK: Log to post-log, pull yesterday's engagement
 
 ### Block 4: SCOUT — more portals (9pm-11pm)
 - [ ] Create Wellfound profile
@@ -142,11 +146,12 @@ Ongoing: soul-os          (side-effects)
 - [ ] Prototype: given tasks with dependencies, produce execution order
 - [ ] Design schedule mode: how to read daily-planner.md and auto-queue
 
-### Block 3: SOCIAL — metrics post (7pm-9pm)
-- [ ] Review Block 1+2 notes from content-log
-- [ ] Draft LinkedIn post: task scheduling metrics or architecture (Tue = Metrics)
-- [ ] Adapt to Twitter thread
-- [ ] Post after user approval
+### Block 3: SOCIAL — Tue = Twitter only (7pm-9pm)
+- [ ] CAPTURE: Pull git commits (72h), update content-log, review post-log
+- [ ] STRATEGY: Architect picks topic (Tue = no LinkedIn, Twitter + Reddit only)
+- [ ] DRAFT: Short-form agent drafts 1-2 tweets (soul-planner queue mode progress)
+- [ ] PUBLISH: Post tweets, engage on Reddit threads (r/selfhosted)
+- [ ] TRACK: Log to post-log, pull engagement metrics
 
 ### Block 4: SCOUT — freelance platforms (9pm-11pm)
 - [ ] Apply to Toptal (screening)
@@ -173,11 +178,13 @@ Ongoing: soul-os          (side-effects)
 - [ ] Design auto-queue trigger (when does schedule mode kick in?)
 - [ ] Document schedule mode spec
 
-### Block 3: SOCIAL — architecture post (7pm-9pm)
-- [ ] Review Block 1+2 notes from content-log
-- [ ] Draft LinkedIn post: soul-planner architecture diagram (Wed = Architecture)
-- [ ] Adapt to Twitter thread with diagram
-- [ ] Post after user approval
+### Block 3: SOCIAL — Wed = Product Shipping (7pm-9pm)
+- [ ] CAPTURE: Pull git commits (72h), update content-log, review post-log
+- [ ] STRATEGY: Architect picks topic (Wed = Product Shipping for LinkedIn)
+- [ ] DRAFT: Long-form agent drafts LinkedIn post (soul-planner shipping update)
+- [ ] DRAFT: Short-form agent drafts 1-2 tweets (runner/schedule progress)
+- [ ] PUBLISH: Post after user approval, engage on Reddit
+- [ ] TRACK: Log to post-log, pull engagement metrics
 
 ### Block 4: SCOUT — applications (9pm-11pm)
 - [ ] Apply to Andela
@@ -204,11 +211,12 @@ Ongoing: soul-os          (side-effects)
 - [ ] Test schedule mode: parse today's planner, queue tasks, run
 - [ ] Fix bugs found during integration testing
 
-### Block 3: SOCIAL — opinion post (7pm-9pm)
-- [ ] Review Block 1+2 notes from content-log
-- [ ] Draft LinkedIn post: opinion on AI task automation (Thu = Opinion)
-- [ ] Adapt to Twitter thread
-- [ ] Post after user approval
+### Block 3: SOCIAL — Thu = Twitter only (7pm-9pm)
+- [ ] CAPTURE: Pull git commits (72h), update content-log, review post-log
+- [ ] STRATEGY: Architect picks topic (Thu = no LinkedIn, Twitter + Reddit only)
+- [ ] DRAFT: Short-form agent drafts 1-2 tweets (integration testing insights)
+- [ ] PUBLISH: Post tweets, engage on Reddit threads
+- [ ] TRACK: Log to post-log, pull engagement metrics
 
 ### Block 4: SCOUT — recruiter outreach (9pm-11pm)
 - [ ] Connect with 5 more recruiters on LinkedIn
@@ -235,12 +243,14 @@ Ongoing: soul-os          (side-effects)
 - [ ] Research: shared filesystem patterns (rsync, NFS, custom)
 - [ ] Plan Phase 2 (soul-mesh) first week priorities
 
-### Block 3: SOCIAL — weekly progress + blog (7pm-9pm)
-- [ ] Review content-log for the full week
-- [ ] Draft LinkedIn post: week's highlights (Fri = Weekly Progress)
-- [ ] Assemble week's posts into 600-1000 word blog post
-- [ ] Publish on blog, cross-post to dev.to
-- [ ] Share blog link on LinkedIn + Twitter
+### Block 3: SOCIAL — Fri = AI & Law + weekly wrap (7pm-9pm)
+- [ ] CAPTURE: Pull full week's git commits, review content-log + post-log
+- [ ] STRATEGY: Architect picks topic (Fri = AI & Law for LinkedIn)
+- [ ] DRAFT: Long-form agent drafts LinkedIn post (AI & law intersection)
+- [ ] DRAFT: Short-form agent drafts week-summary tweet thread
+- [ ] DRAFT: Substack weekly digest from week's content
+- [ ] PUBLISH: Post LinkedIn + tweets + Substack after user approval
+- [ ] TRACK: Log to post-log, Analyst agent runs weekly pivot report
 
 ### Block 4: SCOUT — week review (9pm-11pm)
 - [ ] Review all inbound matches (Instahyre, Wellfound, Naukri)
@@ -262,10 +272,12 @@ Ongoing: soul-os          (side-effects)
 - MILESTONE: "Queue a task, Claude executes it" [ ]
 
 ### Block 3 (SOCIAL)
-- LinkedIn posts published: __ / 5
-- Twitter threads published: __ / 5
-- Blog post #1: assembled [ ] published [ ] cross-posted [ ]
+- LinkedIn posts published: __ / 3 (Mon/Wed/Fri)
+- Tweets published: __
+- Reddit threads engaged: __
+- Substack digest: [ ]
 - Content-log entries: __
+- Post-log entries: __
 
 ### Block 4 (SCOUT)
 - Job portals live: __ / 4
@@ -294,10 +306,10 @@ Ongoing: soul-os          (side-effects)
 
 ## Content Tracker
 
-| Week | LinkedIn | Twitter | Blog | dev.to |
-|------|----------|---------|------|--------|
-| 1 (Feb 22-28) | __ / 5 | __ / 5 | __ / 1 | __ / 1 |
-| 2 (Mar 1-7) | | | | |
+| Week | LinkedIn (3/wk) | Twitter (daily) | Reddit | Substack (1/wk) | Blog | dev.to |
+|------|-----------------|-----------------|--------|-----------------|------|--------|
+| 1 (Feb 22-28) | __ / 3 | __ | __ threads | __ / 1 | __ / 1 | -- |
+| 2 (Mar 1-7) | | | | | | |
 
 ## Scout Tracker
 
@@ -306,10 +318,10 @@ Ongoing: soul-os          (side-effects)
 | Naukri | [x] | [x] | recruiter views: __ |
 | Indeed | [x] | [x] | applications: __ |
 | Instahyre | [x] | [ ] | inbound matches: __ |
-| Wellfound | [ ] | [ ] | applications: __ |
+| Wellfound | [x] | [x] | applications: __ |
 | LinkedIn Jobs | [x] | [x] | applications: __ |
-| Toptal | [ ] | [ ] | status: __ |
-| Turing | [ ] | [ ] | status: __ |
+| Toptal | [ ] | [ ] | status: needs signup |
+| Turing | [ ] | [ ] | status: needs signup |
 | Andela | [ ] | [ ] | status: __ |
 | Recruiters | [ ] | [ ] | connected: __ |
 
