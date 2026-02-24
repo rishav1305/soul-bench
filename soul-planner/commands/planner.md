@@ -15,13 +15,22 @@ The CLI lives at `~/soul/soul-planner/`. If not installed:
 cd ~/soul/soul-planner && pip install -e ".[dev]"
 ```
 
+## ID Convention
+
+Claude Code task subjects use the prefix `SP#<id>:` to map to soul-planner IDs.
+Example: `SP#42: Build auth module`
+
+To find a Claude Code task for a soul-planner ID:
+1. Call `TaskList()`
+2. Find the task whose subject starts with `SP#ID:`
+
 ## Commands
 
 Route based on the first argument in `$ARGUMENTS`:
 
 ### add [title] [--priority low|normal|high|critical] [--details "..."] [--acceptance "..."] [--depends-on 1,2]
 
-**If no title provided (just `/task add`):** Start interactive mode.
+**If no title provided (just `/planner add`):** Start interactive mode.
 1. Ask: "What's the task?"
 2. After user answers, ask: "Any specific requirements or acceptance criteria?"
 3. Ask: "Priority?" with options: low, normal, high (default), critical
@@ -33,8 +42,10 @@ Route based on the first argument in `$ARGUMENTS`:
 python -m soul_planner add "TITLE" --priority PRIORITY --details "DETAILS" --acceptance "CRITERIA" --depends-on IDS
 ```
 
-After creating, also sync to Claude Code's task UI:
-- Use `TaskCreate` with subject = task title, description = task details, activeForm = "Queued: TITLE"
+After creating, sync to Claude Code's task UI:
+```
+TaskCreate(subject="SP#ID: TITLE", description="DETAILS", activeForm="Queued: TITLE")
+```
 
 ### list [--status STATUS]
 
@@ -66,10 +77,20 @@ Show detailed task info.
 python -m soul_planner cancel ID
 ```
 
+After cancelling, sync: find `SP#ID:` via `TaskList()`, then:
+```
+TaskUpdate(taskId=CC_TASK_ID, status="completed")
+```
+
 ### block ID "reason"
 
 ```bash
 python -m soul_planner block ID "REASON"
+```
+
+After blocking, sync: find `SP#ID:` via `TaskList()`, then:
+```
+TaskUpdate(taskId=CC_TASK_ID, activeForm="BLOCKED: TITLE -- REASON")
 ```
 
 ### unblock ID
@@ -78,13 +99,22 @@ python -m soul_planner block ID "REASON"
 python -m soul_planner unblock ID
 ```
 
+After unblocking, sync: find `SP#ID:` via `TaskList()`, then:
+```
+TaskUpdate(taskId=CC_TASK_ID, activeForm="SUBSTEP: TITLE [N/5]")
+```
+Where SUBSTEP and N come from the task's current substep.
+
 ### done ID
 
 ```bash
 python -m soul_planner done ID
 ```
 
-After marking done, update the Claude Code task UI: `TaskUpdate(status=completed)`.
+After marking done, sync: find `SP#ID:` via `TaskList()`, then:
+```
+TaskUpdate(taskId=CC_TASK_ID, status="completed")
+```
 
 ### substep ID STEP
 
@@ -94,7 +124,11 @@ python -m soul_planner substep ID STEP
 
 Where STEP is one of: planning, testing, implementing, reviewing, validating.
 
-After updating, sync to Claude Code task UI: `TaskUpdate(activeForm="STEP: TITLE [N/5]")`.
+After updating, sync: find `SP#ID:` via `TaskList()`, then:
+```
+TaskUpdate(taskId=CC_TASK_ID, activeForm="STEP_UPPER: TITLE [N/5]")
+```
+Where N is: planning=1, testing=2, implementing=3, reviewing=4, validating=5.
 
 ### next
 
@@ -111,13 +145,15 @@ If `$ARGUMENTS` is empty or unrecognized, show the board:
 python -m soul_planner board
 ```
 
-## Status Bar Sync
+## Status Bar Sync Reference
 
 Whenever a task status changes, keep the Claude Code task panel in sync:
-- BACKLOG: `TaskCreate(subject=title, activeForm="Queued: title")`
-- IN_PROGRESS: `TaskUpdate(status=in_progress, activeForm="SUBSTEP: title [N/5]")`
+- BACKLOG: `TaskCreate(subject="SP#ID: title", activeForm="Queued: title")`
+- IN_PROGRESS: `TaskUpdate(activeForm="SUBSTEP: title [N/5]")`
 - BLOCKED: `TaskUpdate(activeForm="BLOCKED: title -- reason")`
 - VALIDATION: `TaskUpdate(activeForm="Review: title")`
-- DONE: `TaskUpdate(status=completed)`
+- DONE/CANCELLED: `TaskUpdate(status="completed")`
+
+Always use `TaskList()` to find the matching Claude Code task ID before calling `TaskUpdate`.
 
 The user invoked: $ARGUMENTS

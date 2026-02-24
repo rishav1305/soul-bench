@@ -9,6 +9,10 @@ model: opus
 
 Pick up a task from the queue and execute it through the full dev workflow.
 
+## ID Convention
+
+Claude Code task subjects use `SP#<id>:` prefix. Use `TaskList()` to find the matching task.
+
 ## Process
 
 1. **Pick task**: If `$ARGUMENTS` contains an ID, use that task. Otherwise, get the next ready task:
@@ -16,13 +20,17 @@ Pick up a task from the queue and execute it through the full dev workflow.
    python -m soul_planner next
    ```
 
-2. **Move to IN_PROGRESS**:
+2. **Ensure task is in Claude Code UI**: Call `TaskList()` and check if `SP#ID:` exists.
+   - If not found: `TaskCreate(subject="SP#ID: TITLE", description="DESCRIPTION", activeForm="Starting: TITLE")`
+   - If found: note the Claude Code task ID for updates.
+
+3. **Move to IN_PROGRESS**:
    ```bash
    python -m soul_planner substep TASK_ID planning
    ```
-   Sync: `TaskUpdate(status=in_progress, activeForm="PLANNING: title [1/5]")`
+   Sync: `TaskUpdate(taskId=CC_ID, activeForm="PLANNING: TITLE [1/5]")`
 
-3. **Execute the 5 substeps**:
+4. **Execute the 5 substeps**:
 
    ### Substep 1: PLANNING
    - Read the task description and acceptance criteria
@@ -35,49 +43,43 @@ Pick up a task from the queue and execute it through the full dev workflow.
    - Write tests first (TDD)
    - Run tests to confirm RED (failing)
    - Update: `python -m soul_planner substep ID testing`
-   - Sync: `TaskUpdate(activeForm="TESTING: title [2/5]")`
+   - Sync: `TaskUpdate(taskId=CC_ID, activeForm="TESTING: TITLE [2/5]")`
 
    ### Substep 3: IMPLEMENTING
    - Write minimal code to pass tests
    - Run tests to confirm GREEN
    - Update: `python -m soul_planner substep ID implementing`
-   - Sync: `TaskUpdate(activeForm="IMPLEMENTING: title [3/5]")`
+   - Sync: `TaskUpdate(taskId=CC_ID, activeForm="IMPLEMENTING: TITLE [3/5]")`
 
    ### Substep 4: REVIEWING
    - Self code-review for quality and security
    - Check: parameterized SQL, no hardcoded secrets, proper error handling
    - Update: `python -m soul_planner substep ID reviewing`
-   - Sync: `TaskUpdate(activeForm="REVIEWING: title [4/5]")`
+   - Sync: `TaskUpdate(taskId=CC_ID, activeForm="REVIEWING: TITLE [4/5]")`
 
    ### Substep 5: VALIDATING
    - Run full test suite
    - Confirm all green
    - Update: `python -m soul_planner substep ID validating`
-   - Sync: `TaskUpdate(activeForm="VALIDATING: title [5/5]")`
+   - Sync: `TaskUpdate(taskId=CC_ID, activeForm="VALIDATING: TITLE [5/5]")`
 
-4. **Move to VALIDATION** (user review):
+5. **Move to VALIDATION** (user review):
    ```bash
    python -m soul_planner validate ID
    ```
+   Sync: `TaskUpdate(taskId=CC_ID, activeForm="Review: TITLE")`
    Tell the user: "Task #ID is ready for your review."
 
-5. **Handle blockers**: If at any point you need user input:
+6. **Handle blockers**: If at any point you need user input:
    ```bash
    python -m soul_planner block ID "Question or issue description"
    ```
+   Sync: `TaskUpdate(taskId=CC_ID, activeForm="BLOCKED: TITLE -- reason")`
    Ask the user the question. When they answer:
    ```bash
    python -m soul_planner unblock ID
    ```
    Resume from the substep where you paused.
-
-## Validate Command
-
-The `validate` CLI command doesn't exist yet. Use this instead:
-```bash
-python -m soul_planner substep ID validating
-```
-Then tell the user the task is ready for review.
 
 ## After User Approves
 
@@ -85,6 +87,6 @@ When the user says the task is good:
 ```bash
 python -m soul_planner done ID
 ```
-Sync: `TaskUpdate(status=completed)`
+Sync: `TaskUpdate(taskId=CC_ID, status="completed")`
 
 The user invoked: $ARGUMENTS
