@@ -165,3 +165,20 @@ class TestNext:
         result = runner.invoke(main, ["next"])
         assert result.exit_code == 0
         assert "Pick me" in result.output
+
+
+class TestSetAgent:
+    """CLI set-agent command."""
+
+    def test_set_agent(self, runner, memory_db):
+        runner.invoke(main, ["add", "Track agent"])
+        result = runner.invoke(main, ["set-agent", "1", "agent-abc123"])
+        assert result.exit_code == 0
+        assert "agent-abc123" in result.output
+
+    def test_set_agent_shown_in_status(self, runner, memory_db):
+        runner.invoke(main, ["add", "Check status"])
+        runner.invoke(main, ["set-agent", "1", "agent-xyz"])
+        result = runner.invoke(main, ["status", "1"])
+        assert result.exit_code == 0
+        assert "agent-xyz" in result.output

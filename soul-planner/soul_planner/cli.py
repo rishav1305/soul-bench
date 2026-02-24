@@ -10,6 +10,7 @@ Commands
 - ``soul-planner block`` -- Block a task with a reason
 - ``soul-planner unblock`` -- Resume a blocked task
 - ``soul-planner done`` -- Mark a task as done
+- ``soul-planner set-agent`` -- Store a background agent ID on a task
 - ``soul-planner substep`` -- Update a task's substep
 - ``soul-planner next`` -- Show next ready task
 """
@@ -150,6 +151,8 @@ def status(task_id: int):
         click.echo(f"  Blocker:  {task.blocker}")
     if task.depends_on:
         click.echo(f"  Deps:     {task.depends_on}")
+    if task.agent_id:
+        click.echo(f"  Agent:    {task.agent_id}")
     click.echo(f"  Created:  {task.created_at}")
     if task.started_at:
         click.echo(f"  Started:  {task.started_at}")
@@ -212,6 +215,21 @@ def done(task_id: int):
 
     task = _run(_done())
     click.echo(f"Task #{task.id} done: \"{task.title}\"")
+
+
+@main.command("set-agent")
+@click.argument("task_id", type=int)
+@click.argument("agent_id")
+def set_agent(task_id: int, agent_id: str):
+    """Store a background agent ID on a task."""
+    db = _get_db()
+
+    async def _set():
+        await db.init()
+        return await db.update(task_id, TaskUpdate(agent_id=agent_id))
+
+    task = _run(_set())
+    click.echo(f"Task #{task.id} agent: {agent_id}")
 
 
 @main.command()
