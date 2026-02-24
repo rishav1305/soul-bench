@@ -87,10 +87,11 @@ Ongoing: soul-os          (side-effects)
 - [ ] PUBLISH: Post after user approval, engage on Reddit
 - [ ] TRACK: Log to post-log, pull engagement metrics
 
-### Block 4: SCOUT — job portal setup (9pm-11pm)
-- [x] Create Naukri profile, upload resume
-- [x] Create Indeed profile, set alerts for "AI Engineer" + "Data Engineer"
-- [x] Enable LinkedIn "Open to Work" (visible to recruiters only)
+### Block 4: SCOUT — profile foundation (9pm-11pm)
+- [ ] Audit each job portal: what fields exist, what information is needed
+- [ ] Collate all missing profile information into a questionnaire for user
+- [ ] Review job alert settings: expand roles beyond "AI Engineer", expand locations
+- [ ] Draft expanded `docs/profile/identity.md` with all fields portals need
 
 ### Evening Review (11pm, 15min)
 - [ ] Strategy redesign done? Planner research started? Content posted?
@@ -100,17 +101,17 @@ Ongoing: soul-os          (side-effects)
 ## Day 3 — Mon Feb 24
 
 ### Block 1: BUILD — soul-planner repo + task model (9am-1pm)
-- [ ] Create `~/soul/soul-planner/` repo structure (pyproject.toml, README, CLAUDE.md)
-- [ ] Define SQLite schema: tasks table (id, title, description, status, priority, depends_on, output, created_at)
-- [ ] Implement `planner/db.py` — async SQLite wrapper for task CRUD
-- [ ] Implement `planner/models.py` — Pydantic models (TaskCreate, TaskStatus, TaskResult)
-- [ ] Write tests for db layer (target: 10+ tests)
+- [x] Create `~/soul/soul-planner/` repo structure (pyproject.toml, README, CLAUDE.md)
+- [x] Define SQLite schema: tasks table (id, title, description, status, priority, depends_on, output, created_at)
+- [x] Implement `planner/db.py` — async SQLite wrapper for task CRUD
+- [x] Implement `planner/models.py` — Pydantic models (TaskCreate, TaskStatus, TaskResult)
+- [x] Write tests for db layer (target: 10+ tests)
 
 ### Block 2: EXPLORE — Claude Code Task tool internals (2pm-6pm)
-- [ ] Read Claude Code docs on Task tool, run_in_background, subagent_type
-- [ ] Experiment: spawn a background task, capture its output
-- [ ] Understand how skills and agents interact with Task tool
-- [ ] Document findings for soul-planner integration
+- [x] Read Claude Code docs on Task tool, run_in_background, subagent_type
+- [x] Experiment: spawn a background task, capture its output
+- [x] Understand how skills and agents interact with Task tool
+- [x] Document findings for soul-planner integration
 
 ### Block 3: SOCIAL (7pm-9pm)
 - [ ] CAPTURE: Pull git commits (72h), update content-log, review post-log
