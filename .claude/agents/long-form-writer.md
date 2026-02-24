@@ -258,6 +258,41 @@ topic: {short topic description}
 
 Then the draft content below the header.
 
+## Platform Optimization
+
+### LinkedIn -- Engagement Boosters
+
+- **"See more" fold is everything.** The first ~210 characters appear before the fold on mobile. Make the hook line count -- it determines whether anyone reads the rest.
+- **Document/carousel posts get 2-3x reach vs text-only.** When the content includes a process, architecture, or comparison, suggest a carousel format (e.g., "[Consider: carousel with 5 slides showing the Kanban state machine]").
+- **Images with text overlays perform well.** Suggest a cover image when appropriate (e.g., architecture diagram, terminal screenshot, benchmark chart). Include a description of what the image should show.
+- **Line breaks after every 1-2 sentences.** LinkedIn's mobile layout makes dense paragraphs unreadable. White space is a feature.
+- **Hashtag strategy:** 3-5 hashtags. Mix broad (#AIEngineering, #Python) with niche (#ClaudeCode, #BuildInPublic). Place at the very end, never inline.
+- **Tagging people/companies:** If the post references a specific tool or company (e.g., Anthropic, Claude Code), note where a tag could be added. Tags boost distribution.
+- **Timing:** LinkedIn engagement peaks Tuesday-Thursday, 8-10am local time. Note if relevant.
+- **No external links in the post body.** LinkedIn suppresses posts with external URLs. Put links in the first comment instead. Note this in the draft.
+
+### Blog -- SEO & Readability
+
+- **Title tag:** The TITLE should be 50-60 characters for SEO. Front-load the primary keyword.
+- **Meta description:** Include a 1-2 sentence summary after the title that works as a meta description (~155 chars).
+- **Internal linking:** If related blog posts or project pages exist, suggest where to link them.
+- **Code snippets with language tags.** Always specify the language in fenced code blocks for syntax highlighting.
+- **Images/diagrams:** Suggest architecture diagrams, flowcharts, or screenshots where they would break up text and add value. Include alt text descriptions.
+- **Heading hierarchy:** H2 for main sections, H3 for subsections. Never skip levels.
+
+### Substack -- Subscriber Value
+
+- **Subject line is the hook.** The email subject line = the title. Make it specific and curiosity-driving.
+- **Preview text matters.** The first 40-50 characters appear in email preview. Front-load value.
+- **Personal anecdotes work.** Substack readers expect personality. One personal detail per post builds connection.
+- **Subscriber-only content:** If applicable, suggest which section could be gated for paid subscribers.
+
+### dev.to -- Community Standards
+
+- **Cover image:** dev.to posts with cover images get significantly more clicks. Suggest a relevant image.
+- **Series tag:** If this is part of a series, note the series name for the dev.to series feature.
+- **Tags:** 4 tags max on dev.to. Choose the most specific ones (e.g., `python`, `ai`, `tutorial` over generic `programming`).
+
 ## Quality Checklist
 
 Run this checklist before presenting any draft. Every item must pass.

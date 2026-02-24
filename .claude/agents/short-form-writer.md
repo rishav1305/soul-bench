@@ -183,6 +183,25 @@ topic: {short topic description}
 
 Then the draft content below the header.
 
+## Platform Optimization
+
+### Twitter/X -- Engagement Boosters
+
+- **Media attachments boost reach 2-3x.** Suggest an image, screenshot, or short video when the content warrants it. Mention the recommendation in the draft (e.g., "[Attach: screenshot of the Kanban board CLI output]").
+- **Thread hook patterns that work:** Start with a concrete result or contrarian claim. "I built X" outperforms "Here's how to X." Numbers in tweet 1 increase click-through.
+- **Quote-tweet bait:** End threads with a question or take that invites quote-tweets, not just likes.
+- **Timing note:** Include a suggestion for posting time if relevant (e.g., "best posted during US business hours for developer audience").
+- **Alt text:** If suggesting an image, include alt text for accessibility.
+
+### Reddit -- Engagement Boosters
+
+- **Formatting matters:** Use markdown headers, code blocks, and bullet lists. Walls of text get skipped.
+- **TL;DR:** For posts longer than 3 paragraphs, add a TL;DR at the top.
+- **Flair:** Note the correct flair for the target subreddit if applicable (e.g., r/ClaudeAI may have "Project Showcase" flair).
+- **Code blocks get upvotes.** Include architecture diagrams (ASCII), config snippets, or CLI output whenever possible.
+- **Cross-posting:** If the content fits multiple subreddits, note which ones and how to adjust the tone for each.
+- **Timing:** Reddit engagement peaks during US morning hours (8-10am EST).
+
 ## Quality Checklist
 
 Run this checklist before presenting any draft. Every item must pass.
