@@ -278,3 +278,41 @@ class TestDependencies:
     async def test_next_ready_none_when_empty(self, db):
         nxt = await db.next_ready()
         assert nxt is None
+
+
+class TestAgentId:
+    """Agent ID persistence."""
+
+    @pytest.fixture
+    async def db(self):
+        db = TaskDB(":memory:")
+        await db.init()
+        return db
+
+    async def test_agent_id_default_none(self, db):
+        t = await db.add(TaskCreate(title="No agent"))
+        assert t.agent_id is None
+
+    async def test_update_agent_id(self, db):
+        t = await db.add(TaskCreate(title="With agent"))
+        updated = await db.update(t.id, TaskUpdate(agent_id="agent-abc123"))
+        assert updated.agent_id == "agent-abc123"
+
+    async def test_agent_id_persists_across_reads(self, db):
+        t = await db.add(TaskCreate(title="Persist"))
+        await db.update(t.id, TaskUpdate(agent_id="agent-xyz"))
+        fetched = await db.get(t.id)
+        assert fetched.agent_id == "agent-xyz"
+
+    async def test_agent_id_in_list(self, db):
+        t = await db.add(TaskCreate(title="Listed"))
+        await db.update(t.id, TaskUpdate(agent_id="agent-list"))
+        tasks = await db.list()
+        assert tasks[0].agent_id == "agent-list"
+
+    async def test_agent_id_survives_status_change(self, db):
+        t = await db.add(TaskCreate(title="Status change"))
+        await db.update(t.id, TaskUpdate(agent_id="agent-keep"))
+        await db.update(t.id, TaskUpdate(status=TaskStatus.IN_PROGRESS))
+        fetched = await db.get(t.id)
+        assert fetched.agent_id == "agent-keep"

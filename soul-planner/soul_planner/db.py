@@ -47,6 +47,7 @@ CREATE TABLE IF NOT EXISTS tasks (
     blocker       TEXT,
     output        TEXT,
     error         TEXT,
+    agent_id      TEXT,
     retry_count   INTEGER NOT NULL DEFAULT 0,
     max_retries   INTEGER NOT NULL DEFAULT 3,
     created_at    TEXT NOT NULL DEFAULT (datetime('now')),
@@ -149,6 +150,7 @@ class TaskDB:
             blocker=row["blocker"],
             output=row["output"],
             error=row["error"],
+            agent_id=row["agent_id"],
             retry_count=row["retry_count"],
             max_retries=row["max_retries"],
             created_at=datetime.fromisoformat(row["created_at"]),
@@ -239,6 +241,10 @@ class TaskDB:
         if update.error is not None:
             sets.append("error = ?")
             params.append(update.error)
+
+        if update.agent_id is not None:
+            sets.append("agent_id = ?")
+            params.append(update.agent_id)
 
         if sets:
             sql = f"UPDATE tasks SET {', '.join(sets)} WHERE id = ?"
