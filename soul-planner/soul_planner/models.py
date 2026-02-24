@@ -70,6 +70,7 @@ class Task(BaseModel):
     started_at: datetime | None
     completed_at: datetime | None
     depends_on: list[int]
+    agent_id: str | None = None
 
 
 class TaskUpdate(BaseModel):
@@ -78,3 +79,4 @@ class TaskUpdate(BaseModel):
     blocker: str | None = None
     output: str | None = None
     error: str | None = None
+    agent_id: str | None = None

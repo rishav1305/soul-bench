@@ -167,6 +167,53 @@ class TestTask:
         )
         assert t.blocker == "Should we use WebSocket or SSE?"
 
+    def test_task_with_agent_id(self):
+        now = datetime(2026, 2, 23, 12, 0, 0)
+        t = Task(
+            id=1,
+            title="Agent task",
+            description="",
+            acceptance="",
+            status=TaskStatus.IN_PROGRESS,
+            substep=Substep.PLANNING,
+            priority=Priority.NORMAL,
+            source=TaskSource.MANUAL,
+            blocker=None,
+            output=None,
+            error=None,
+            retry_count=0,
+            max_retries=3,
+            created_at=now,
+            started_at=now,
+            completed_at=None,
+            depends_on=[],
+            agent_id="abc123",
+        )
+        assert t.agent_id == "abc123"
+
+    def test_task_agent_id_default_none(self):
+        now = datetime(2026, 2, 23, 12, 0, 0)
+        t = Task(
+            id=1,
+            title="No agent",
+            description="",
+            acceptance="",
+            status=TaskStatus.BACKLOG,
+            substep=None,
+            priority=Priority.NORMAL,
+            source=TaskSource.MANUAL,
+            blocker=None,
+            output=None,
+            error=None,
+            retry_count=0,
+            max_retries=3,
+            created_at=now,
+            started_at=None,
+            completed_at=None,
+            depends_on=[],
+        )
+        assert t.agent_id is None
+
 
 class TestTaskUpdate:
     """TaskUpdate model for partial updates."""
@@ -187,3 +234,7 @@ class TestTaskUpdate:
     def test_blocker_update(self):
         u = TaskUpdate(blocker="Need clarification on auth method")
         assert u.blocker == "Need clarification on auth method"
+
+    def test_agent_id_update(self):
+        u = TaskUpdate(agent_id="xyz789")
+        assert u.agent_id == "xyz789"
