@@ -68,6 +68,21 @@ Bridge topics at intersections instead of keeping them in silos:
 - Don't just post about Server Rack -> Post about **hardware requirements for running a private legal data vault**
 - Don't just post about Shipping -> Post about **analytics of how AI developers use your specific tools**
 
+### Sunday: Trending Topics (Non-Work)
+
+Sundays break from the work-driven content cycle. Post about whatever is trending -- not tied to BUILD or EXPLORE output. This keeps the profile human and broadens reach.
+
+**Examples:**
+- AI news: new model releases, industry acquisitions, open-source breakthroughs
+- Sports: Cricket World Cup, football, IPL commentary
+- Tech culture: developer trends, conference highlights, memes
+- Current events: anything with genuine personal interest
+
+**Rules:**
+- No forced tie-back to soul-* projects. Be a person, not a brand.
+- LinkedIn + Twitter only (casual tone, no Substack/blog)
+- Architect agent skips the 72h commit review on Sundays -- just surfaces trending topics
+
 ---
 
 ## Agent Architecture: 4 Cognitive-Mode Agents
@@ -248,7 +263,7 @@ All content requires user review and approval before posting.
 | Thu | -- | 1-2 tweets | 3-5 comments | -- | -- | -- |
 | Fri | AI & Law post | 1-2 tweets | 3-5 comments | -- | -- | -- |
 | Sat | -- | 1 tweet (blog link) | -- | Weekly digest | Blog post | -- |
-| Sun | -- | -- | -- | -- | -- | -- |
+| Sun | Trending topic post | 1-2 tweets (trending) | -- | -- | -- | -- |
 | 2x/month | -- | -- | -- | -- | -- | Tutorial |
 
 ---
