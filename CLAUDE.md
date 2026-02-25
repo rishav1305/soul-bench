@@ -71,7 +71,7 @@ When I say **"sprint"**: Read `docs/daily-planner.md` for the current week. Show
 
 | # | Project | Goal | Status |
 |---|---------|------|--------|
-| 1 | **soul-planner** | Inbuilt planner for Claude Code with task assignment | Spec only |
+| 1 | **soul-planner** | Inbuilt planner for Claude Code with task assignment | Built, 126 tests |
 | 2 | **soul-mesh** | Combine devices into one virtual heavy machine for LLM inference | v0.2.0, 253 tests |
 | 3 | **soul-outreach** | Market a product or skill in multiple ways | 8% extracted |
 | 4 | **soul-viz** | Source-to-webpage visualization, all infra under the hood | Scaffold |
