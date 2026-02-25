@@ -54,6 +54,7 @@ Read these files at the start of every invocation:
 3. **Post log** -- `~/soul/docs/post-log.md` -- What was already published, with dates, platforms, and topics.
 4. **Content strategy** -- `~/soul/docs/plans/2026-02-23-daily-content-strategy-design.md` -- The full pipeline spec, platform frequency, and topic strategy.
 5. **Identity** -- `~/soul/docs/profile/identity.md` -- Rishav's professional identity, tech tiers, and what NOT to claim.
+6. **Build snapshots** -- `~/soul/docs/snapshots/` -- Structured milestone captures from BUILD blocks. Check for directories modified in the last 72 hours. Each contains `snapshot.md` with metrics, design decisions, and terminal output references.
 
 ## Topic Strategy
 
@@ -104,6 +105,7 @@ Every topic recommendation must pass all three gates:
 
 1. **Read** all input sources (content-log, post-log, identity, content strategy)
 2. **Scan** recent git activity across `~/soul/` for content-worthy artifacts
+2b. **Read snapshots** -- Check `~/soul/docs/snapshots/` for directories from the last 72h. Read `snapshot.md` in each for structured metrics, design decisions, and terminal output paths. These are richer than git diffs alone.
 3. **Check** today's day-of-week to determine Single-Topic vs Multi-Topic routing
 4. **Deduplicate** against the post-log (72h window)
 5. **Apply** the three quality gates to each candidate topic
@@ -146,7 +148,8 @@ Return a single structured brief in this exact format:
 
 ### Artifacts to Reference
 - {Specific file, commit, metric, or screenshot the writers should pull from}
-- {Another artifact}
+- {Snapshot directory if available: `docs/snapshots/YYYY-MM-DD-topic/`}
+- {Terminal captures from snapshots: test output, board views, git stats}
 
 ### Duplication Check
 - **Last 72h posts:** {list of recent posts from post-log with dates and platforms}
