@@ -321,6 +321,17 @@ impl TaskDB {
         })
     }
 
+    /// Clear the substep field (set to NULL).
+    pub fn clear_substep(&self, id: i64) -> Result<Task> {
+        self.with_conn(|conn| {
+            conn.execute(
+                "UPDATE tasks SET substep = NULL WHERE id = ?1",
+                params![id],
+            )?;
+            require_task(conn, id)
+        })
+    }
+
     /// Block a task with a reason string.
     pub fn block(&self, id: i64, reason: &str) -> Result<Task> {
         self.with_conn(|conn| {
