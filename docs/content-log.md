@@ -6,10 +6,12 @@ Used by Block 3 (SOCIAL) to draft daily posts and weekly blog assembly.
 ## Format
 
 ```
-DATE | BLOCK | What happened (1-2 lines) | Content type hint
+DATE | BLOCK | What happened (1-2 lines) | Content type hint | snapshot: path (optional)
 ```
 
 Content type hints: `deep-dive`, `metrics`, `architecture`, `opinion`, `progress`
+
+The `snapshot:` field links to a `docs/snapshots/YYYY-MM-DD-topic/` directory containing structured milestone data and terminal captures from the build-snapshot skill.
 
 ---
 
