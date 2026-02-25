@@ -55,6 +55,8 @@ digraph block_execution {
 
 ## Steps
 
+> **Snapshots:** This workflow captures build snapshots at 5 milestones for the content pipeline. The `<block-topic>` is derived from the block's primary task name in kebab-case (e.g., `soul-planner-integration`).
+
 ### 1. PLAN — Brainstorm approach
 **Model: opus** (architectural decisions need maximum reasoning)
 **Skill:** `superpowers:brainstorming`
@@ -64,6 +66,8 @@ digraph block_execution {
 - Identify dependencies between tasks
 - Design the approach (data flow, architecture, patterns)
 - Get user approval on the design
+
+**Snapshot:** Invoke build-snapshot skill: `milestone=design-approved topic=<block-topic>`
 
 ### 2. WRITE PLAN — Create phased implementation plan
 **Model: opus** (comprehensive planning needs deep codebase understanding)
@@ -92,6 +96,8 @@ digraph block_execution {
 - For new code: test core functionality and boundary conditions
 - Run tests — confirm RED (failing)
 
+**Snapshot:** Invoke build-snapshot skill: `milestone=tests-red topic=<block-topic>`
+
 ### 5. EXECUTE — Implement in batches of 3
 **Model: sonnet** (tests constrain the work — implementation is well-defined)
 **Default: Subagent-Driven** (this session, no need to ask)
@@ -104,6 +110,8 @@ digraph block_execution {
 - **STOP and wait for user feedback** before next batch
 - Run tests after each batch — confirm GREEN (passing)
 - Code review between batches using `superpowers:requesting-code-review`
+
+**Snapshot:** Invoke build-snapshot skill: `milestone=tests-green topic=<block-topic>`
 
 ### 6. UPDATE PLANNER — Mark tasks done
 **Model: haiku** (simple file edits)
@@ -138,6 +146,8 @@ Check for:
 
 If issues found: fix, then go back to Step 7 (retest).
 
+**Snapshot:** Invoke build-snapshot skill: `milestone=security-clear topic=<block-topic>`
+
 ### 9. VERIFY — Confirm everything before claiming done
 **Model: sonnet** (reading output and confirming)
 **Skill:** `superpowers:verification-before-completion`
@@ -155,6 +165,8 @@ If issues found: fix, then go back to Step 7 (retest).
 - Merge worktree back to master
 - Push to Gitea
 - Clean up worktree
+
+**Snapshot:** Invoke build-snapshot skill: `milestone=shipped topic=<block-topic>`
 
 ## Model Selection Summary
 
