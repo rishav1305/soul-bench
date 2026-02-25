@@ -59,7 +59,7 @@ digraph block_execution {
 
 ### 1. PLAN — Brainstorm approach
 **Model: opus** (architectural decisions need maximum reasoning)
-**Skill:** `superpowers:brainstorming`
+**Skill:** `soul-workflow:brainstorming`
 
 - Read the daily planner block tasks
 - Understand what needs to be built
@@ -71,7 +71,7 @@ digraph block_execution {
 
 ### 2. WRITE PLAN — Create phased implementation plan
 **Model: opus** (comprehensive planning needs deep codebase understanding)
-**Skill:** `superpowers:writing-plans`
+**Skill:** `soul-workflow:writing-plans`
 
 - Break the approved design into bite-sized tasks
 - Group into batches of 3
@@ -80,7 +80,7 @@ digraph block_execution {
 
 ### 3. ISOLATE — Git worktree
 **Model: haiku** (mechanical git operations)
-**Skill:** `superpowers:using-git-worktrees`
+**Skill:** `soul-workflow:using-git-worktrees`
 
 - Create a git worktree for this block's work
 - Verify clean working directory
@@ -88,7 +88,7 @@ digraph block_execution {
 
 ### 4. TDD — Write tests first
 **Model: opus** (writing good tests requires understanding edge cases and invariants)
-**Skill:** `superpowers:test-driven-development`
+**Skill:** `soul-workflow:test-driven-development`
 
 - Write tests BEFORE implementation code
 - Cover: happy path, edge cases, error conditions, security boundaries
@@ -101,7 +101,7 @@ digraph block_execution {
 ### 5. EXECUTE — Implement in batches of 3
 **Model: sonnet** (tests constrain the work — implementation is well-defined)
 **Default: Subagent-Driven** (this session, no need to ask)
-**Skill:** `superpowers:subagent-driven-development`
+**Skill:** `soul-workflow:subagent-driven-development`
 
 - Use subagent-driven-development by default -- dispatch fresh subagent per task, review between tasks
 - Do NOT ask which execution approach -- always use subagent-driven unless user explicitly requests parallel session
@@ -109,7 +109,7 @@ digraph block_execution {
 - After each batch: report what was done, show verification output
 - **STOP and wait for user feedback** before next batch
 - Run tests after each batch — confirm GREEN (passing)
-- Code review between batches using `superpowers:requesting-code-review`
+- Code review between batches using `soul-workflow:requesting-code-review`
 
 **Snapshot:** Invoke build-snapshot skill: `milestone=tests-green topic=<block-topic>`
 
@@ -132,7 +132,7 @@ digraph block_execution {
 
 ### 8. SECURITY AUDIT — Code review
 **Model: opus** (security review needs maximum thoroughness)
-**Skill:** `superpowers:requesting-code-review`
+**Skill:** `soul-workflow:requesting-code-review`
 
 Check for:
 - SQL injection (parameterized queries with `?` only)
@@ -150,7 +150,7 @@ If issues found: fix, then go back to Step 7 (retest).
 
 ### 9. VERIFY — Confirm everything before claiming done
 **Model: sonnet** (reading output and confirming)
-**Skill:** `superpowers:verification-before-completion`
+**Skill:** `soul-workflow:verification-before-completion`
 
 - Run tests one final time
 - Read actual output (don't assume)
@@ -159,7 +159,7 @@ If issues found: fix, then go back to Step 7 (retest).
 
 ### 10. COMMIT + MERGE — Finish the branch
 **Model: haiku** (mechanical git operations)
-**Skill:** `superpowers:finishing-a-development-branch`
+**Skill:** `soul-workflow:finishing-a-development-branch`
 
 - Clean commit with descriptive message
 - Merge worktree back to master

@@ -1,0 +1,7 @@
+{
+  "name": "soul-workflow",
+  "description": "Battle-tested execution workflows for the soul ecosystem. TDD, code review, debugging, security audit, build snapshots.",
+  "version": "1.0.0",
+  "author": { "name": "Rishav" },
+  "license": "MIT"
+}
