@@ -1,0 +1,7 @@
+{
+  "name": "soul-showcase",
+  "description": "Record terminal GIFs at task execution checkpoints for social media showcases. Captures autonomous build progress as shareable content.",
+  "version": "1.0.0",
+  "author": { "name": "Rishav" },
+  "license": "MIT"
+}
