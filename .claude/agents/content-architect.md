@@ -55,6 +55,11 @@ Read these files at the start of every invocation:
 4. **Content strategy** -- `~/soul/docs/plans/2026-02-23-daily-content-strategy-design.md` -- The full pipeline spec, platform frequency, and topic strategy.
 5. **Identity** -- `~/soul/docs/profile/identity.md` -- Rishav's professional identity, tech tiers, and what NOT to claim.
 6. **Build snapshots** -- `~/soul/docs/snapshots/` -- Structured milestone captures from BUILD blocks. Check for directories modified in the last 72 hours. Each contains `snapshot.md` with metrics, design decisions, and terminal output references.
+7. **Showcase GIFs** -- `~/soul/docs/showcase/` -- Terminal GIF recordings at task execution checkpoints. Check for directories from the last 72 hours. Each may contain:
+   - `social-brief.md` -- Pre-formatted content brief with per-platform GIF recommendations
+   - `showcase.md` -- Checkpoint narrative with GIF links and metrics
+   - `*.gif` files -- Terminal recordings (board views, test runs, git logs) attachable to social posts
+   - Prioritize showcases with `shipped` milestone -- these have the complete story arc
 
 ## Topic Strategy
 
@@ -106,6 +111,7 @@ Every topic recommendation must pass all three gates:
 1. **Read** all input sources (content-log, post-log, identity, content strategy)
 2. **Scan** recent git activity across `~/soul/` for content-worthy artifacts
 2b. **Read snapshots** -- Check `~/soul/docs/snapshots/` for directories from the last 72h. Read `snapshot.md` in each for structured metrics, design decisions, and terminal output paths. These are richer than git diffs alone.
+2c. **Read showcases** -- Check `~/soul/docs/showcase/` for directories from the last 72h. If a `social-brief.md` exists, it contains a pre-formatted brief with GIF recommendations per platform. Reference GIFs in the Artifacts section of the output brief.
 3. **Check** today's day-of-week to determine Single-Topic vs Multi-Topic routing
 4. **Deduplicate** against the post-log (72h window)
 5. **Apply** the three quality gates to each candidate topic
@@ -150,6 +156,7 @@ Return a single structured brief in this exact format:
 - {Specific file, commit, metric, or screenshot the writers should pull from}
 - {Snapshot directory if available: `docs/snapshots/YYYY-MM-DD-topic/`}
 - {Terminal captures from snapshots: test output, board views, git stats}
+- {Showcase GIFs if available: `docs/showcase/YYYY-MM-DD-topic/*.gif` -- attach to tweets, embed in LinkedIn}
 
 ### Duplication Check
 - **Last 72h posts:** {list of recent posts from post-log with dates and platforms}

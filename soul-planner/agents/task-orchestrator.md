@@ -86,13 +86,27 @@ For each substep in order (planning, testing, implementing, reviewing, validatin
    python -m soul_planner append-output TASK_ID "SNAPSHOT [MILESTONE]: Captured at SUBSTEP_UPPER"
    ```
 
-7. **Handle failure**: If the agent reports ISSUES other than "none", block the task:
+7. **Showcase capture**: Spawn showcase-recorder in background to record a terminal GIF:
+   ```
+   Task(
+       description="showcase capture: MILESTONE for task #TASK_ID",
+       subagent_type="showcase-recorder",
+       model="haiku",
+       run_in_background=true,
+       prompt="TASK_ID: TASK_ID\nMILESTONE: MILESTONE\nTOPIC: TOPIC\nPROJECT_DIR: PROJECT_DIR"
+   )
+   ```
+   Where MILESTONE maps from substep: planning->design-approved, testing->tests-red, implementing->tests-green, reviewing->security-clear, validating->shipped.
+   Where TOPIC is derived from TITLE in kebab-case (e.g., "Add task queue" -> "add-task-queue").
+   This runs in the background and does NOT block the next substep.
+
+8. **Handle failure**: If the agent reports ISSUES other than "none", block the task:
    ```bash
    python -m soul_planner block TASK_ID "SUBSTEP failed: ERROR_DESCRIPTION"
    ```
    Then STOP. Do not continue to the next substep.
 
-8. **Continue**: If no issues, proceed to the next substep.
+9. **Continue**: If no issues, proceed to the next substep.
 
 ## After All 5 Substeps
 

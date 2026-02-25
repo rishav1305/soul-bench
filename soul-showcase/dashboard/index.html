@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>soul-showcase // task dashboard</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Courier New", Courier, monospace;
+  background: #1a1a2e;
+  color: #c8c8d4;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+header {
+  margin-bottom: 24px;
+}
+
+header h1 {
+  font-size: 1.2rem;
+  color: #e2e2f0;
+  letter-spacing: 0.1em;
+}
+
+header h1 span {
+  color: #e94560;
+}
+
+.meta {
+  font-size: 0.72rem;
+  color: #5a5a7a;
+  margin-top: 4px;
+}
+
+/* Progress section */
+.progress-section {
+  background: #16213e;
+  border: 1px solid #0f3460;
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+
+.progress-label {
+  font-size: 0.75rem;
+  color: #8888aa;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.progress-label span { color: #c8c8d4; }
+
+.progress-track {
+  background: #0f3460;
+  border-radius: 4px;
+  height: 8px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.progress-fill {
+  background: #e94560;
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+.checkpoint-msg {
+  font-size: 0.72rem;
+  color: #7ecfb3;
+  border-left: 2px solid #e94560;
+  padding-left: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.checkpoint-msg.empty { color: #5a5a7a; font-style: italic; }
+
+/* Kanban layout */
+.board-wrapper {
+  overflow-x: auto;
+}
+
+.board-label {
+  font-size: 0.65rem;
+  color: #5a5a7a;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 6px;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: 200px 1fr 200px;
+  gap: 12px;
+  min-width: 760px;
+}
+
+/* Left: BACKLOG */
+.col-solo { display: flex; flex-direction: column; gap: 12px; }
+
+/* Middle: IN PROGRESS group */
+.col-group {
+  background: #0f3460;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.col-group-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #6888bb;
+  margin-bottom: 10px;
+}
+
+.col-group-inner {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+/* Right: DONE */
+
+/* Individual columns */
+.kanban-col {
+  background: #16213e;
+  border: 1px solid #0f3460;
+  border-radius: 6px;
+  padding: 10px;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.col-header {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #8888aa;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #0f3460;
+  margin-bottom: 2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.col-count {
+  background: #0f3460;
+  border-radius: 10px;
+  padding: 1px 7px;
+  font-size: 0.65rem;
+  color: #6888bb;
+}
+
+/* Cards */
+.card {
+  background: #1a1a2e;
+  border: 1px solid #0f3460;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 0.75rem;
+}
+
+.card-title {
+  color: #e2e2f0;
+  line-height: 1.4;
+  margin-bottom: 8px;
+  word-break: break-word;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.badge {
+  font-size: 0.62rem;
+  padding: 2px 7px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.badge-critical { background: #e94560; color: #fff; }
+.badge-high     { background: #f39c12; color: #1a1a2e; }
+.badge-normal   { background: #3498db; color: #fff; }
+.badge-low      { background: #2ecc71; color: #1a1a2e; }
+
+.card-substep {
+  font-size: 0.62rem;
+  color: #5a5a7a;
+  font-style: italic;
+  white-space: nowrap;
+}
+
+.card-checkpoint {
+  font-size: 0.65rem;
+  color: #7ecfb3;
+  margin-top: 6px;
+  border-left: 2px solid #e94560;
+  padding-left: 6px;
+  word-break: break-word;
+}
+
+/* Empty state */
+.empty-col {
+  font-size: 0.65rem;
+  color: #3a3a5a;
+  font-style: italic;
+  padding: 6px 0;
+}
+
+/* Error / loading */
+#status-msg {
+  font-size: 0.75rem;
+  color: #e94560;
+  margin-bottom: 16px;
+  display: none;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>soul-showcase <span>//</span> task dashboard</h1>
+  <div class="meta" id="last-updated">loading data...</div>
+</header>
+
+<div id="status-msg"></div>
+
+<div class="progress-section">
+  <div class="progress-label">
+    substep progress — <span id="progress-text">0 / 0</span>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+  </div>
+  <div class="checkpoint-msg empty" id="checkpoint-msg">no checkpoint yet</div>
+</div>
+
+<div class="board-label">kanban board</div>
+<div class="board-wrapper">
+  <div class="board">
+
+    <!-- BACKLOG -->
+    <div class="col-solo">
+      <div class="kanban-col" id="col-backlog">
+        <div class="col-header">backlog <span class="col-count" id="cnt-backlog">0</span></div>
+      </div>
+    </div>
+
+    <!-- IN PROGRESS group -->
+    <div class="col-group">
+      <div class="col-group-label">in progress</div>
+      <div class="col-group-inner">
+        <div class="kanban-col" id="col-planning">
+          <div class="col-header">planning <span class="col-count" id="cnt-planning">0</span></div>
+        </div>
+        <div class="kanban-col" id="col-testing">
+          <div class="col-header">testing <span class="col-count" id="cnt-testing">0</span></div>
+        </div>
+        <div class="kanban-col" id="col-implementing">
+          <div class="col-header">implementing <span class="col-count" id="cnt-implementing">0</span></div>
+        </div>
+        <div class="kanban-col" id="col-reviewing">
+          <div class="col-header">reviewing <span class="col-count" id="cnt-reviewing">0</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DONE -->
+    <div class="col-solo">
+      <div class="kanban-col" id="col-done">
+        <div class="col-header">done <span class="col-count" id="cnt-done">0</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const SUBSTEP_COLS = ["planning", "testing", "implementing", "reviewing", "validating"];
+
+function resolveColumn(task) {
+  if (task.status === "done") return "done";
+  if (task.status === "backlog") return "backlog";
+  if (task.substep && SUBSTEP_COLS.includes(task.substep)) return task.substep;
+  return "backlog";
+}
+
+function badgeClass(priority) {
+  const map = { critical: "badge-critical", high: "badge-high", normal: "badge-normal", low: "badge-low" };
+  return map[priority] || "badge-normal";
+}
+
+function makeCard(task) {
+  const card = document.createElement("div");
+  card.className = "card";
+
+  const title = document.createElement("div");
+  title.className = "card-title";
+  title.textContent = task.title;
+
+  const footer = document.createElement("div");
+  footer.className = "card-footer";
+
+  const badge = document.createElement("span");
+  badge.className = "badge " + badgeClass(task.priority);
+  badge.textContent = task.priority || "normal";
+
+  footer.appendChild(badge);
+
+  if (task.substep) {
+    const substep = document.createElement("span");
+    substep.className = "card-substep";
+    substep.textContent = task.substep;
+    footer.appendChild(substep);
+  }
+
+  card.appendChild(title);
+  card.appendChild(footer);
+
+  if (task.checkpoint) {
+    const cp = document.createElement("div");
+    cp.className = "card-checkpoint";
+    cp.textContent = task.checkpoint;
+    card.appendChild(cp);
+  }
+
+  return card;
+}
+
+function renderEmpty(colEl) {
+  const empty = document.createElement("div");
+  empty.className = "empty-col";
+  empty.textContent = "empty";
+  colEl.appendChild(empty);
+}
+
+function renderBoard(data) {
+  const counts = {};
+  const colIds = ["backlog", "planning", "testing", "implementing", "reviewing", "validating", "done"];
+  colIds.forEach(id => { counts[id] = 0; });
+
+  const tasks = Array.isArray(data.tasks) ? data.tasks : [];
+
+  tasks.forEach(task => {
+    const col = resolveColumn(task);
+    const colEl = document.getElementById("col-" + col);
+    if (!colEl) return;
+    colEl.appendChild(makeCard(task));
+    counts[col] = (counts[col] || 0) + 1;
+  });
+
+  colIds.forEach(id => {
+    const colEl = document.getElementById("col-" + id);
+    const cntEl = document.getElementById("cnt-" + id);
+    if (cntEl) cntEl.textContent = counts[id] || 0;
+    if (colEl && counts[id] === 0) renderEmpty(colEl);
+  });
+
+  // Progress
+  const prog = data.progress || {};
+  const pct = typeof prog.percentage === "number" ? Math.min(100, Math.max(0, prog.percentage)) : 0;
+  const cur = prog.current_substep || 0;
+  const tot = prog.total_substeps || 0;
+
+  document.getElementById("progress-fill").style.width = pct + "%";
+  document.getElementById("progress-text").textContent = cur + " / " + tot + "  (" + pct + "%)";
+
+  // Checkpoint
+  const cpEl = document.getElementById("checkpoint-msg");
+  if (data.checkpoint_message) {
+    cpEl.textContent = data.checkpoint_message;
+    cpEl.classList.remove("empty");
+  }
+
+  document.getElementById("last-updated").textContent =
+    "rendered at " + new Date().toLocaleTimeString();
+}
+
+function showError(msg) {
+  const el = document.getElementById("status-msg");
+  el.textContent = msg;
+  el.style.display = "block";
+  document.getElementById("last-updated").textContent = "data unavailable";
+
+  // Render empty columns so the layout still shows
+  renderBoard({ tasks: [], progress: {}, checkpoint_message: null });
+}
+
+fetch("./data.json")
+  .then(r => {
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    return r.json();
+  })
+  .then(renderBoard)
+  .catch(err => showError("could not load data.json — " + err.message));
+</script>
+</body>
+</html>

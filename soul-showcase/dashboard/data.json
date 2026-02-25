@@ -1,0 +1,34 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Add task queue to soul-os",
+      "status": "in_progress",
+      "substep": "implementing",
+      "priority": "high",
+      "checkpoint": "tests-green: 8/8 passing"
+    },
+    {
+      "id": 2,
+      "title": "Wire health checks",
+      "status": "backlog",
+      "substep": null,
+      "priority": "normal",
+      "checkpoint": null
+    },
+    {
+      "id": 3,
+      "title": "Add retry logic",
+      "status": "done",
+      "substep": null,
+      "priority": "low",
+      "checkpoint": "shipped: all 12 tests pass"
+    }
+  ],
+  "progress": {
+    "current_substep": 3,
+    "total_substeps": 5,
+    "percentage": 60
+  },
+  "checkpoint_message": "tests-green: 8/8 passing -- implementation complete"
+}
