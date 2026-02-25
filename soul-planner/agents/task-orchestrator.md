@@ -54,19 +54,27 @@ For each substep in order (planning, testing, implementing, reviewing, validatin
    )
    ```
 
-4. **Check result**: Read the agent's response. If it reports ISSUES other than "none", block the task:
+4. **Check result**: Read the agent's response.
+
+5. **Capture output**: Store the substep result in the task's output field:
+   ```bash
+   python -m soul_planner append-output TASK_ID "SUBSTEP_UPPER [N/5]: SUMMARY_OF_AGENT_RESULT"
+   ```
+   Summarize the agent's report: files changed, test results, issues found.
+
+6. **Handle failure**: If the agent reports ISSUES other than "none", block the task:
    ```bash
    python -m soul_planner block TASK_ID "SUBSTEP failed: ERROR_DESCRIPTION"
    ```
    Then STOP. Do not continue to the next substep.
 
-5. **Continue**: If no issues, proceed to the next substep.
+7. **Continue**: If no issues, proceed to the next substep.
 
 ## After All 5 Substeps
 
-Move the task to VALIDATION:
+Move the task to VALIDATION with final output:
 ```bash
-python -m soul_planner validate TASK_ID
+python -m soul_planner done TASK_ID --output "All 5 substeps completed. Ready for review."
 ```
 
 Sync UI:
@@ -76,7 +84,7 @@ TaskUpdate(status="completed")
 
 ## Error Handling
 
-- If a substep agent fails: block the task with the error, then STOP
+- If a substep agent fails: capture error in output, block the task, then STOP
 - If a CLI command fails: block the task with the CLI error, then STOP
 - Never guess or retry automatically -- block and let the user decide
 
@@ -87,3 +95,4 @@ TaskUpdate(status="completed")
 - Only use Read to check task state if needed.
 - Only use Task to spawn task-runner agents.
 - Only use TaskCreate/TaskUpdate to sync the Claude Code UI.
+- Always capture substep output with `append-output` before moving to the next step.

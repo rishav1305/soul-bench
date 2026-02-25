@@ -11,6 +11,7 @@ Commands
 - ``soul-planner unblock`` -- Resume a blocked task
 - ``soul-planner done`` -- Mark a task as done
 - ``soul-planner set-agent`` -- Store a background agent ID on a task
+- ``soul-planner append-output`` -- Append text to a task's output
 - ``soul-planner substep`` -- Update a task's substep
 - ``soul-planner next`` -- Show next ready task
 """
@@ -153,6 +154,10 @@ def status(task_id: int):
         click.echo(f"  Deps:     {task.depends_on}")
     if task.agent_id:
         click.echo(f"  Agent:    {task.agent_id}")
+    if task.output:
+        click.echo(f"  Output:   {task.output}")
+    if task.error:
+        click.echo(f"  Error:    {task.error}")
     click.echo(f"  Created:  {task.created_at}")
     if task.started_at:
         click.echo(f"  Started:  {task.started_at}")
@@ -205,13 +210,17 @@ def unblock(task_id: int):
 
 @main.command()
 @click.argument("task_id", type=int)
-def done(task_id: int):
+@click.option("--output", "output_text", default=None, help="Final output to store on the task.")
+def done(task_id: int, output_text: str | None):
     """Mark a task as done."""
     db = _get_db()
 
     async def _done():
         await db.init()
-        return await db.update(task_id, TaskUpdate(status=TaskStatus.DONE))
+        update = TaskUpdate(status=TaskStatus.DONE)
+        if output_text is not None:
+            update.output = output_text
+        return await db.update(task_id, update)
 
     task = _run(_done())
     click.echo(f"Task #{task.id} done: \"{task.title}\"")
@@ -230,6 +239,27 @@ def set_agent(task_id: int, agent_id: str):
 
     task = _run(_set())
     click.echo(f"Task #{task.id} agent: {agent_id}")
+
+
+@main.command("append-output")
+@click.argument("task_id", type=int)
+@click.argument("text")
+def append_output(task_id: int, text: str):
+    """Append text to a task's output field."""
+    db = _get_db()
+
+    async def _append():
+        await db.init()
+        task = await db.get(task_id)
+        if not task:
+            raise ValueError(f"Task {task_id} not found")
+        existing = task.output or ""
+        separator = "\n---\n" if existing else ""
+        new_output = existing + separator + text
+        return await db.update(task_id, TaskUpdate(output=new_output))
+
+    task = _run(_append())
+    click.echo(f"Task #{task.id} output updated ({len(task.output)} chars)")
 
 
 @main.command()

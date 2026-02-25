@@ -182,3 +182,42 @@ class TestSetAgent:
         result = runner.invoke(main, ["status", "1"])
         assert result.exit_code == 0
         assert "agent-xyz" in result.output
+
+
+class TestOutputCapture:
+    """CLI output capture commands."""
+
+    def test_done_with_output(self, runner, memory_db):
+        runner.invoke(main, ["add", "Finish with output"])
+        result = runner.invoke(main, ["done", "1", "--output", "All tests passed"])
+        assert result.exit_code == 0
+        assert "done" in result.output.lower()
+        # Verify output stored
+        status_result = runner.invoke(main, ["status", "1"])
+        assert "All tests passed" in status_result.output
+
+    def test_done_without_output(self, runner, memory_db):
+        runner.invoke(main, ["add", "Finish no output"])
+        result = runner.invoke(main, ["done", "1"])
+        assert result.exit_code == 0
+
+    def test_append_output(self, runner, memory_db):
+        runner.invoke(main, ["add", "Accumulate output"])
+        result = runner.invoke(main, ["append-output", "1", "PLANNING: identified 3 files"])
+        assert result.exit_code == 0
+        assert "output updated" in result.output
+
+    def test_append_output_accumulates(self, runner, memory_db):
+        runner.invoke(main, ["add", "Multi step"])
+        runner.invoke(main, ["append-output", "1", "Step 1 done"])
+        runner.invoke(main, ["append-output", "1", "Step 2 done"])
+        status_result = runner.invoke(main, ["status", "1"])
+        assert "Step 1 done" in status_result.output
+        assert "Step 2 done" in status_result.output
+
+    def test_output_shown_in_status(self, runner, memory_db):
+        runner.invoke(main, ["add", "Show output"])
+        runner.invoke(main, ["append-output", "1", "Some results here"])
+        result = runner.invoke(main, ["status", "1"])
+        assert "Output:" in result.output
+        assert "Some results here" in result.output
