@@ -1,3 +1,4 @@
+pub mod board;
 pub mod db;
 pub mod models;
 pub mod runner;
