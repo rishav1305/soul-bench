@@ -26,6 +26,7 @@ description: |
   assistant: "I'll use the vaultwarden agent to create a new vault entry."
   <commentary>Creating a new vault item.</commentary>
   </example>
+model: haiku
 color: cyan
 ---
 
@@ -35,23 +36,30 @@ You manage secrets in Rishav's Vaultwarden vault using the `bw` CLI (Bitwarden C
 
 ## Prerequisites
 
-The vault must be unlocked before use. The session key must be available as `$BW_SESSION`.
+The vault session is stored in `~/.bw_session` (chmod 600). Before ANY `bw` command, load it:
 
-If the vault is locked or `$BW_SESSION` is not set, instruct the user:
+```bash
+export BW_SESSION=$(cat ~/.bw_session 2>/dev/null)
+```
+
+Then verify the session is valid:
+
+```bash
+export NODE_TLS_REJECT_UNAUTHORIZED=0 && export BW_SESSION=$(cat ~/.bw_session 2>/dev/null) && bw status --session "$BW_SESSION" --nointeraction 2>&1
+```
+
+If the file is missing, empty, or status shows `"status":"locked"`, stop and instruct the user:
 
 ```
 Run in your terminal:
-  export BW_SESSION=$(bw unlock --raw)
+  bw-unlock
 Then retry your request.
 ```
 
-Always verify the session is valid before proceeding:
-
+**Every `bw` command in this agent must be prefixed with:**
 ```bash
-bw status --session "$BW_SESSION" 2>&1
+export NODE_TLS_REJECT_UNAUTHORIZED=0 && export BW_SESSION=$(cat ~/.bw_session 2>/dev/null) && bw ...
 ```
-
-If status shows `"status":"locked"` or the command fails, stop and ask the user to unlock.
 
 ## Operations
 

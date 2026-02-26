@@ -26,9 +26,9 @@ This convention is rebuilt every session. No persistent mapping needed.
 On session start, check for active tasks:
 
 ```bash
-python -m soul_planner list --status in_progress 2>/dev/null
-python -m soul_planner list --status blocked 2>/dev/null
-python -m soul_planner list --status validation 2>/dev/null
+python3 -m soul_planner list --status in_progress 2>/dev/null
+python3 -m soul_planner list --status blocked 2>/dev/null
+python3 -m soul_planner list --status validation 2>/dev/null
 ```
 
 If there are active tasks, sync them to Claude Code's task UI using `TaskCreate`:
@@ -54,7 +54,7 @@ If there are active tasks, sync them to Claude Code's task UI using `TaskCreate`
 When the user asks about tasks informally ("what's on my plate?", "any tasks?"), show:
 
 ```bash
-python -m soul_planner board
+python3 -m soul_planner board
 ```
 
 ## Awareness Rules

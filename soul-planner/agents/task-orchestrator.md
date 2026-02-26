@@ -46,7 +46,7 @@ For each substep in order (planning, testing, implementing, reviewing, validatin
 
 1. **Update state**: Set the substep in soul-planner:
    ```bash
-   python -m soul_planner substep TASK_ID SUBSTEP_NAME
+   python3 -m soul_planner substep TASK_ID SUBSTEP_NAME
    ```
 
 2. **Sync UI**: Update Claude Code's task UI:
@@ -77,13 +77,13 @@ For each substep in order (planning, testing, implementing, reviewing, validatin
 
 5. **Capture output**: Store the substep result in the task's output field:
    ```bash
-   python -m soul_planner append-output TASK_ID "SUBSTEP_UPPER [N/5]: SUMMARY_OF_AGENT_RESULT"
+   python3 -m soul_planner append-output TASK_ID "SUBSTEP_UPPER [N/5]: SUMMARY_OF_AGENT_RESULT"
    ```
    Summarize the agent's report: skills invoked, files changed, test results, checkpoint commit, issues found.
 
 6. **Capture snapshot**: After each successful substep, log the milestone:
    ```bash
-   python -m soul_planner append-output TASK_ID "SNAPSHOT [MILESTONE]: Captured at SUBSTEP_UPPER"
+   python3 -m soul_planner append-output TASK_ID "SNAPSHOT [MILESTONE]: Captured at SUBSTEP_UPPER"
    ```
 
 7. **Showcase capture**: Spawn showcase-recorder in background to record a terminal GIF:
@@ -102,7 +102,7 @@ For each substep in order (planning, testing, implementing, reviewing, validatin
 
 8. **Handle failure**: If the agent reports ISSUES other than "none", block the task:
    ```bash
-   python -m soul_planner block TASK_ID "SUBSTEP failed: ERROR_DESCRIPTION"
+   python3 -m soul_planner block TASK_ID "SUBSTEP failed: ERROR_DESCRIPTION"
    ```
    Then STOP. Do not continue to the next substep.
 
@@ -112,7 +112,7 @@ For each substep in order (planning, testing, implementing, reviewing, validatin
 
 Move the task to VALIDATION with final output:
 ```bash
-python -m soul_planner done TASK_ID --output "All 5 substeps completed. Skills: brainstorming, writing-plans, test-driven-development, subagent-driven-development, requesting-code-review, verification-before-completion, finishing-a-development-branch. Snapshots: design-approved, tests-red, tests-green, security-clear, shipped."
+python3 -m soul_planner done TASK_ID --output "All 5 substeps completed. Skills: brainstorming, writing-plans, test-driven-development, subagent-driven-development, requesting-code-review, verification-before-completion, finishing-a-development-branch. Snapshots: design-approved, tests-red, tests-green, security-clear, shipped."
 ```
 
 Sync UI:

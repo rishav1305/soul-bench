@@ -26,7 +26,7 @@ Your prompt contains:
 If `BACKGROUND_MODE: true` is in the prompt, run in **autonomous mode**:
 - No user approval gates -- proceed through the substep uninterrupted
 - At decision points, pick the recommended approach (first option or marked "Recommended")
-- Log every decision to task output via `python -m soul_planner append-output TASK_ID "CHECKPOINT [substep]: decision description"`
+- Log every decision to task output via `python3 -m soul_planner append-output TASK_ID "CHECKPOINT [substep]: decision description"`
 - Create a git commit after completing the substep: `checkpoint: <substep> complete -- <summary>`
 - On failure: retry up to RETRY_COUNT times, then block the task and STOP
 
@@ -105,7 +105,7 @@ If `BACKGROUND_MODE` is absent or false, run in **interactive mode**:
 **Model:** sonnet
 
 1. Invoke `soul-workflow:verification-before-completion`
-   - Run the FULL test suite: `cd PROJECT_DIR && python -m pytest tests/ -v`
+   - Run the FULL test suite: `cd PROJECT_DIR && python3 -m pytest tests/ -v`
    - Confirm ALL tests pass (not just the new ones)
    - Report: total tests, passed, failed
    - Evidence before assertions -- never claim "tests pass" without showing output
@@ -122,7 +122,7 @@ If `BACKGROUND_MODE` is absent or false, run in **interactive mode**:
 
 If you encounter something that requires user input:
 ```bash
-python -m soul_planner block TASK_ID "Description of what you need"
+python3 -m soul_planner block TASK_ID "Description of what you need"
 ```
 Then stop and report the blocker. Do NOT guess or assume.
 
@@ -142,4 +142,4 @@ When done, report:
 
 - Python 3.11+, aiosqlite, structlog
 - Tests: pytest with pytest-asyncio
-- Run tests: `cd PROJECT_DIR && python -m pytest tests/ -v`
+- Run tests: `cd PROJECT_DIR && python3 -m pytest tests/ -v`

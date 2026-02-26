@@ -2,15 +2,28 @@
 date: 2026-02-25
 status: "Awaiting approval -- do not publish"
 platform: Twitter
-topic: soul-planner task queue architecture
+topic: soul-planner autonomous overnight task execution
 ---
 
-1/ I built a task queue for Claude Code in 48 hours. 1,022 lines of Python. 126 tests. 12 CLI subcommands. Here is how it works.
+<!-- PLATFORM OPTIMIZATION NOTES (remove before posting)
 
-2/ The problem: Claude Code tasks die when your terminal closes. I wanted a persistent Kanban queue backed by SQLite that survives session restarts and drives Claude through a structured dev workflow autonomously.
+OPTIMAL POSTING TIME:
+Post at 9:00-10:00 AM IST -- catches US East Coast evening scroll (7pm-8pm ET).
+Alternatively 8:00 PM IST for US afternoon audience.
 
-3/ Architecture: 6 Python modules. State machine with 5 substeps inside IN_PROGRESS (plan, test, implement, review, validate). Task dependencies use topological ordering. All SQL parameterized. Async throughout via aiosqlite.
+MEDIA (optional -- thread works without images too):
+- Tweet 1: Attach a screenshot of `planner board` CLI output or a workflow diagram.
+- Tweet 3: Attach a screenshot of the task-runner.md frontmatter showing the restricted tool list.
+- Tweets 2, 4, 5: No image needed.
 
-4/ The Claude Code layer: 3 slash commands, a task-runner agent that picks up the next ready task and runs the full workflow, and a skill that restores queue state on session start. Schedule mode parses my daily planner markdown and auto-queues tasks.
+-->
 
-5/ 8 years of data engineering. I designed the system, directed Claude Code to build it, and shipped it in a weekend. That is what AI-augmented architecture looks like in practice. Repo dropping soon.
+1/ I built a Claude Code plugin so I can queue dev tasks before I sleep. The agent runs them overnight. I wake up and review the completed work. 1,022 lines of Python. 126 tests. Built in 48 hours.
+
+2/ The queue is a SQLite-backed Kanban. Each IN_PROGRESS task runs through 5 substeps: plan, test, implement, review, validate. Tests are written before implementation. Nothing skips steps.
+
+3/ The task-runner agent picks up the next ready task and runs the full workflow. If it hits a blocker, it stops and flags it with a reason. It does not guess. I review everything in the morning before anything ships.
+
+4/ Schedule mode reads my daily planner markdown and auto-queues today's tasks. So the nightly handoff is: I update the planner, the agent reads it, picks up the queue, runs what it can, parks what it can't.
+
+5/ 8 years of data engineering. I designed the system, directed Claude Code to build it. The overnight part works because the failure mode is tight -- blocked means stopped, not improvised. Repo dropping soon. What does your autonomous dev workflow look like?

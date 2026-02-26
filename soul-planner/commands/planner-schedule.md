@@ -21,7 +21,7 @@ Parse `~/soul/docs/daily-planner.md`, find today's date, and queue uncompleted t
 
 4. **Queue uncompleted tasks**: For each `[ ]` task in the target block(s):
    ```bash
-   python -m soul_planner add "TASK_TITLE" --details "From daily planner Day N, Block B"
+   python3 -m soul_planner add "TASK_TITLE" --details "From daily planner Day N, Block B"
    ```
 
    Skip tasks marked `[x]` (done), `[-]` (skipped), or `[!]` (blocked).
@@ -30,7 +30,7 @@ Parse `~/soul/docs/daily-planner.md`, find today's date, and queue uncompleted t
 
 6. **Show result**:
    ```bash
-   python -m soul_planner board
+   python3 -m soul_planner board
    ```
 
 ## Example

@@ -1,6 +1,6 @@
 ---
 date: 2026-02-26
-status: "Awaiting approval -- do not publish"
+status: "Published"
 platform: Reddit
 subreddit: r/LocalLLaMA
 topic: CARS benchmark -- Phi-3.5-mini vs Qwen2.5-3B, CPU and GPU results
@@ -114,7 +114,7 @@ python3 scripts/benchmark.py --prompts prompts/ --results-dir results/
 
 39 tests cover scoring logic, response parsing, and prompt loading.
 
-Full methodology, scoring definitions, and per-prompt results: [blog link — pending publish]
+Full methodology, scoring definitions, and per-prompt results: https://rishavchatterjee.com/blog/cars-benchmark
 
 ---
 

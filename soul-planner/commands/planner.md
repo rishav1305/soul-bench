@@ -12,7 +12,7 @@ Manage the soul-planner task queue. All task data persists in SQLite across sess
 
 The CLI lives at `~/soul/soul-planner/`. If not installed:
 ```bash
-cd ~/soul/soul-planner && pip install -e ".[dev]"
+cd ~/soul/soul-planner && pip3 install -e ".[dev]" --break-system-packages
 ```
 
 ## ID Convention
@@ -39,7 +39,7 @@ Route based on the first argument in `$ARGUMENTS`:
 **If title provided:** Create immediately.
 
 ```bash
-python -m soul_planner add "TITLE" --priority PRIORITY --details "DETAILS" --acceptance "CRITERIA" --depends-on IDS
+python3 -m soul_planner add "TITLE" --priority PRIORITY --details "DETAILS" --acceptance "CRITERIA" --depends-on IDS
 ```
 
 After creating, sync to Claude Code's task UI:
@@ -50,7 +50,7 @@ TaskCreate(subject="SP#ID: TITLE", description="DETAILS", activeForm="Queued: TI
 ### list [--status STATUS]
 
 ```bash
-python -m soul_planner list [--status backlog|in_progress|blocked|validation|done|cancelled]
+python3 -m soul_planner list [--status backlog|in_progress|blocked|validation|done|cancelled]
 ```
 
 Show output to user in a clean table format.
@@ -58,7 +58,7 @@ Show output to user in a clean table format.
 ### board
 
 ```bash
-python -m soul_planner board
+python3 -m soul_planner board
 ```
 
 Show the Kanban board output. This is the default if user just says `/planner` with no arguments.
@@ -66,7 +66,7 @@ Show the Kanban board output. This is the default if user just says `/planner` w
 ### status ID
 
 ```bash
-python -m soul_planner status ID
+python3 -m soul_planner status ID
 ```
 
 Show detailed task info.
@@ -74,7 +74,7 @@ Show detailed task info.
 ### cancel ID
 
 ```bash
-python -m soul_planner cancel ID
+python3 -m soul_planner cancel ID
 ```
 
 After cancelling, sync: find `SP#ID:` via `TaskList()`, then:
@@ -85,7 +85,7 @@ TaskUpdate(taskId=CC_TASK_ID, status="completed")
 ### block ID "reason"
 
 ```bash
-python -m soul_planner block ID "REASON"
+python3 -m soul_planner block ID "REASON"
 ```
 
 After blocking, sync: find `SP#ID:` via `TaskList()`, then:
@@ -96,7 +96,7 @@ TaskUpdate(taskId=CC_TASK_ID, activeForm="BLOCKED: TITLE -- REASON")
 ### unblock ID
 
 ```bash
-python -m soul_planner unblock ID
+python3 -m soul_planner unblock ID
 ```
 
 After unblocking, sync: find `SP#ID:` via `TaskList()`, then:
@@ -108,7 +108,7 @@ Where SUBSTEP and N come from the task's current substep.
 ### done ID
 
 ```bash
-python -m soul_planner done ID
+python3 -m soul_planner done ID
 ```
 
 After marking done, sync: find `SP#ID:` via `TaskList()`, then:
@@ -119,7 +119,7 @@ TaskUpdate(taskId=CC_TASK_ID, status="completed")
 ### substep ID STEP
 
 ```bash
-python -m soul_planner substep ID STEP
+python3 -m soul_planner substep ID STEP
 ```
 
 Where STEP is one of: planning, testing, implementing, reviewing, validating.
@@ -133,7 +133,7 @@ Where N is: planning=1, testing=2, implementing=3, reviewing=4, validating=5.
 ### next
 
 ```bash
-python -m soul_planner next
+python3 -m soul_planner next
 ```
 
 Show the next ready task (highest priority with all dependencies met).
@@ -142,7 +142,7 @@ Show the next ready task (highest priority with all dependencies met).
 
 If `$ARGUMENTS` is empty or unrecognized, show the board:
 ```bash
-python -m soul_planner board
+python3 -m soul_planner board
 ```
 
 ## Status Bar Sync Reference

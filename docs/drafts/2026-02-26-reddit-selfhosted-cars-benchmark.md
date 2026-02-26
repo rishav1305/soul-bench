@@ -1,6 +1,6 @@
 ---
 date: 2026-02-26
-status: "Awaiting approval -- do not publish"
+status: "Published"
 platform: Reddit
 subreddit: r/selfhosted
 topic: Local LLM benchmarks on constrained hardware (i5-8400, 8GB RAM)
@@ -74,7 +74,7 @@ Qwen2.5-3B over Phi-3.5-mini if you're running CPU-only:
 
 Neither model meets a production-quality bar (I set a gate of >=80% overall with no category below 70%) — but for home automation tasks like classifying events, generating short scripts, or extracting structured data from text, they're genuinely useful.
 
-Full write-up with all results tables, the CARS efficiency metric, and reproduction instructions: [link to blog post — to be added before posting]
+Full write-up with all results tables, the CARS efficiency metric, and reproduction instructions: https://rishavchatterjee.com/blog/cars-benchmark
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 date: 2026-02-26
-status: "Awaiting approval -- do not publish"
+status: "Published"
 platform: "Blog / Medium"
 topic: "CARS metric — cost-aware benchmark of Phi-3.5-mini vs Qwen2.5-3B on CPU and GPU"
 ---
