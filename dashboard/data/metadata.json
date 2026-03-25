@@ -1,0 +1,211 @@
+{
+  "benchmark": {
+    "name": "CARS Benchmark",
+    "version": "2.0",
+    "date": "2026-03-24",
+    "description": "Cost-Adjusted Response Score \u2014 52 cloud LLMs evaluated on 30 structured-output prompts across 10 real-world task categories"
+  },
+  "stats": {
+    "total_models": 52,
+    "total_providers": 8,
+    "total_prompts": 30,
+    "total_categories": 10,
+    "total_evaluations": 1560,
+    "avg_format_tax_pp": 15.4
+  },
+  "categories": {
+    "campaign-planning": "Campaign Planning",
+    "classification": "Classification",
+    "code-generation": "Code Generation",
+    "contact-research": "Contact Research",
+    "email-drafting": "Email Drafting",
+    "infra-management": "Infra Management",
+    "knowledge-qa": "Knowledge QA",
+    "reply-classification": "Reply Classification",
+    "system-health": "System Health",
+    "task-planning": "Task Planning"
+  },
+  "providers": {
+    "OpenAI": {
+      "count": 16,
+      "models": [
+        "o3",
+        "gpt-oss-20b-1:0",
+        "gpt-5.2",
+        "gpt-4o",
+        "gpt-3.5-turbo-0125",
+        "gpt-4.1-mini",
+        "gpt-4-turbo",
+        "gpt-4.1",
+        "gpt-4.1-nano",
+        "gpt-oss-120b-1:0",
+        "o3-mini",
+        "o4-mini",
+        "gpt-4o-mini",
+        "gpt-5",
+        "gpt-5-mini",
+        "gpt-5-nano"
+      ],
+      "median_strict": 68.7,
+      "median_relaxed": 82.7,
+      "best_strict": 85.0,
+      "worst_strict": 43.3,
+      "spread": 41.7
+    },
+    "Anthropic": {
+      "count": 13,
+      "models": [
+        "claude-sonnet-4-20250514",
+        "claude-3-5-sonnet-20241022",
+        "claude-sonnet-4-5-20250929",
+        "claude-opus-4-5-20251101",
+        "claude-3-sonnet-20240229",
+        "claude-3-5-haiku-20241022",
+        "claude-haiku-4-5-20251001",
+        "claude-opus-4-6",
+        "claude-3-5-sonnet-20240620",
+        "claude-4.5-opus",
+        "claude-sonnet-4-6",
+        "claude-3-haiku-20240307",
+        "claude-3-7-sonnet-20250219"
+      ],
+      "median_strict": 62.1,
+      "median_relaxed": 84.1,
+      "best_strict": 73.4,
+      "worst_strict": 33.9,
+      "spread": 39.5
+    },
+    "Google": {
+      "count": 12,
+      "models": [
+        "gemini-3-flash-no-reasoning",
+        "gemini-2.5-flash-no-reasoning",
+        "gemini-2.0-flash",
+        "gemini-3-pro",
+        "gemini-3.1-pro",
+        "gemini-3-flash",
+        "gemini-2.5-flash-lite",
+        "gemini-2.5-pro",
+        "gemini-2.5-flash",
+        "gemini-2.5-flash-preview-04-17",
+        "gemini-2.5-pro-exp-03-25",
+        "gemini-2.5-pro-preview-05-06"
+      ],
+      "median_strict": 46.4,
+      "median_relaxed": 68.3,
+      "best_strict": 69.7,
+      "worst_strict": 30.6,
+      "spread": 39.1
+    },
+    "Alibaba": {
+      "count": 2,
+      "models": [
+        "qwen3-32b",
+        "qwen3-coder-30b-a3b"
+      ],
+      "median_strict": 65.8,
+      "median_relaxed": 82.5,
+      "best_strict": 65.8,
+      "worst_strict": 61.2,
+      "spread": 4.6
+    },
+    "Mistral": {
+      "count": 3,
+      "models": [
+        "mistral-large-2407",
+        "mistral-7b-instruct",
+        "mixtral-8x7b-instruct"
+      ],
+      "median_strict": 50.3,
+      "median_relaxed": 66.5,
+      "best_strict": 64.7,
+      "worst_strict": 49.3,
+      "spread": 15.4
+    },
+    "Mercury": {
+      "count": 1,
+      "models": [
+        "mercury/onprem"
+      ],
+      "median_strict": 63.0,
+      "median_relaxed": 83.0,
+      "best_strict": 63.0,
+      "worst_strict": 63.0,
+      "spread": 0.0
+    },
+    "Amazon": {
+      "count": 3,
+      "models": [
+        "nova-micro",
+        "nova-pro",
+        "nova-lite"
+      ],
+      "median_strict": 62.3,
+      "median_relaxed": 79.0,
+      "best_strict": 62.3,
+      "worst_strict": 56.7,
+      "spread": 5.6
+    },
+    "DeepSeek": {
+      "count": 2,
+      "models": [
+        "r1",
+        "mercury/onprem.deepseek-coder-small"
+      ],
+      "median_strict": 40.8,
+      "median_relaxed": 57.5,
+      "best_strict": 40.8,
+      "worst_strict": 24.5,
+      "spread": 16.3
+    }
+  },
+  "insights": {
+    "top_strict": "o3",
+    "top_strict_score": 85.0,
+    "zero_format_tax": [
+      "o3",
+      "gpt-3.5-turbo-0125",
+      "gpt-5"
+    ],
+    "most_efficient": "nova-micro",
+    "generation_regressions": [
+      {
+        "newer": "gpt-5",
+        "older": "gpt-3.5-turbo-0125",
+        "delta_pp": -19.0
+      },
+      {
+        "newer": "gemini-2.5-pro",
+        "older": "gemini-2.0-flash",
+        "delta_pp": -32.4
+      },
+      {
+        "newer": "claude-3-7-sonnet-20250219",
+        "older": "claude-3-5-sonnet-20241022",
+        "delta_pp": -37.3
+      }
+    ],
+    "reasoning_penalties": [
+      {
+        "model": "Gemini 2.5 Flash",
+        "with_reasoning": 33.6,
+        "without": 66.8,
+        "penalty_x": 2.0
+      },
+      {
+        "model": "Gemini 3 Flash",
+        "with_reasoning": 46.4,
+        "without": 69.7,
+        "penalty_x": 1.5
+      }
+    ]
+  },
+  "methodology": {
+    "scoring": "Dual: strict (exact format match) and relaxed (correct answer, any format)",
+    "cars_formula": "CARS_Size = Accuracy / (Est_Size_GB x Avg_Latency_s)",
+    "infrastructure": "All models tested via LiteLLM unified API",
+    "prompts": "30 structured prompts requiring JSON/specific format output",
+    "temperature": 0.0
+  },
+  "generated_at": "2026-03-25T19:22:26.473308Z"
+}
