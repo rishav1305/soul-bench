@@ -1,24 +1,54 @@
 # soul-bench
 
-> 10-task, 33-prompt benchmark suite with the CARS efficiency metric for local LLM evaluation.
+> **52 LLMs. 7 providers. 30 prompts. 10 task categories. One metric that matters: CARS.**
 
 | Field | Value |
 |-------|-------|
 | Type | **PUBLIC** |
-| Category | Research Tool |
-| Status | Built, 39 tests passing |
-| Prompts | 33 (30 suite + 3 smoke test) |
-| Scoring methods | 7 (fractional 0.0-1.0) |
+| Category | Research Tool / LLM Benchmark |
+| Status | **52 cloud models + 2 local models benchmarked** |
+| Prompts | 30 structured (10 categories x 3 prompts) |
+| Scoring | Dual: strict (exact format) + relaxed (correct answer) |
+| Key metric | CARS (Cost-Adjusted Response Score) |
 | License | MIT |
 
-## Benchmark Results (Google Colab T4 GPU)
+## Cloud Benchmark Results (March 2026)
 
-| Model | Size | Accuracy | Latency | VRAM | Tok/s | CARS_Size | CARS_VRAM |
-|-------|------|----------|---------|------|-------|-----------|-----------|
-| **Qwen2.5-3B-Instruct Q4_K_M** | 1.96 GB | **78.5%** | **2.06s** | **2,347 MB** | 48.18 | **0.1948** | **0.1666** |
-| Phi-3.5-mini-instruct Q4_K_M | 2.23 GB | 62.4% | 3.89s | 3,297 MB | 51.75 | 0.0721 | 0.0499 |
+**52 models** from **7 providers** evaluated on 30 structured-output prompts via LiteLLM.
 
-Qwen2.5-3B wins on accuracy (+16%), latency (1.9x faster), VRAM (29% less), and CARS (2.7-3.3x higher). Full results in [`results/`](results/).
+### Top 10 by Strict Accuracy
+
+| # | Model | Provider | Strict % | Relaxed % | Format Tax | Latency | CARS_Size |
+|---|-------|----------|----------|-----------|------------|---------|-----------|
+| 1 | **o3** | OpenAI | **85.0%** | 85.0% | **0pp** | 4.72s | 0.0009 |
+| 2 | **gpt-oss-20b** | OpenAI | 79.4% | 82.7% | 3.3pp | 1.61s | **0.0257** |
+| 3 | **gpt-5.2** | OpenAI | 78.2% | 91.5% | 13.3pp | 2.69s | 0.0007 |
+| 4 | **gpt-4o** | OpenAI | 77.8% | 87.8% | 10.0pp | 3.00s | 0.0013 |
+| 5 | **gpt-3.5-turbo** | OpenAI | 75.7% | 75.7% | 0pp | 1.50s | 0.0252 |
+| 6 | **claude-sonnet-4** | Anthropic | 73.4% | **93.4%** | 20.0pp | 4.72s | 0.0022 |
+| 7 | **gpt-4.1-mini** | OpenAI | 72.0% | 85.3% | 13.3pp | 2.06s | 0.0117 |
+| 8 | **gpt-4-turbo** | OpenAI | 71.5% | 84.8% | 13.3pp | 8.83s | 0.0005 |
+| 9 | **claude-3-5-sonnet-v2** | Anthropic | 71.2% | 91.2% | 20.0pp | 3.71s | 0.0027 |
+| 10 | **gemini-3-flash-no-reasoning** | Google | 69.7% | 89.7% | 20.0pp | 4.94s | 0.0047 |
+
+Full results (all 52 models): [`results/cloud-2026-03-24/`](results/cloud-2026-03-24/)
+
+### Key Findings
+
+1. **o3 is #1 strict (85.0%) with zero format tax** — the only reasoning model that follows format instructions perfectly
+2. **A $0.002 model beats GPT-4o:** gpt-oss-20b (20B) scores 79.4% vs GPT-4o's 77.8% at 17x better efficiency
+3. **Format Tax averages 14pp** across all 52 models — models know the answer but can't follow format instructions
+4. **Reasoning HURTS structured tasks:** Gemini 2.5 Flash scores 2x worse with reasoning enabled (33.6% vs 66.8%)
+5. **Generation regression is real:** GPT-5 < GPT-3.5 Turbo (-19pp), Gemini 2.5 Pro < 2.0 Flash (-32pp)
+
+### Local Benchmark Results (Feb 2026, CPU/GPU)
+
+| Model | Size | Accuracy | Latency | CARS_Size |
+|-------|------|----------|---------|-----------|
+| **Qwen2.5-3B-Instruct Q4_K_M** | 1.96 GB | **78.5%** | **2.06s** | **0.1948** |
+| Phi-3.5-mini-instruct Q4_K_M | 2.23 GB | 62.4% | 3.89s | 0.0721 |
+
+Full local results in [`results/`](results/)
 
 ### Category Accuracy
 
