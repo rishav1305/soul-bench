@@ -179,6 +179,8 @@ soul-bench/
 | [SoulGraph](https://github.com/rishav1305/soulgraph) | Multi-agent framework with built-in RAGAS evaluation |
 | [soul-team](https://github.com/rishav1305/soul-team) | Multi-agent runtime — distributed coordination across machines |
 | [soul](https://github.com/rishav1305/soul) | Full-stack AI platform — the system soul-bench was built to evaluate |
+| [preset-toolkit](https://github.com/rishav1305/preset-toolkit) | Claude Code plugin for safe Preset/Superset dashboard management |
+| [dbt-toolkit](https://github.com/rishav1305/dbt-toolkit) | Claude Code plugin for dbt workflow automation |
 
 ---
 
@@ -188,4 +190,9 @@ MIT — see [LICENSE](LICENSE).
 
 ---
 
-Built by [Rishav Chatterjee](https://rishavchatterjee.com) · [LinkedIn](https://linkedin.com/in/rishavchatterjee) · [GitHub](https://github.com/rishav1305)
+**Rishav Chatterjee** — Senior AI Architect
+
+- Portfolio: [rishavchatterjee.com](https://rishavchatterjee.com)
+- CARS Dashboard: [rishavchatterjee.com/cars](https://rishavchatterjee.com/cars)
+- GitHub: [github.com/rishav1305](https://github.com/rishav1305)
+- LinkedIn: [linkedin.com/in/rishavchatterjee](https://linkedin.com/in/rishavchatterjee)
